@@ -21,10 +21,8 @@ export class LoginForm extends Component {
         this.sendPostRequest = this.sendPostRequest.bind(this);
     };
 
-    async componentDidMount() {
-        await authService.getAccessToken();
-        var um = new UserManager();
-        console.log(await um.getUser())
+    componentDidMount() {
+        
     }
 
     handleInputChange(event) {

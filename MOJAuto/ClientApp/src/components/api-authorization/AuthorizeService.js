@@ -29,7 +29,6 @@ export class AuthorizeService {
     async getAccessToken() {
         await this.ensureUserManagerInitialized();
         const user = await this.userManager.getUser();
-        console.log(user,' user in get acces token')
         return user && user.access_token;
     }
 
@@ -176,13 +175,14 @@ export class AuthorizeService {
     }
 
     async ensureUserManagerInitialized() {
+        return;
         if (this.userManager !== undefined) {
             return;
         }
 
         let response = await fetch(ApplicationPaths.ApiAuthorizationClientConfigurationUrl);
         if (!response.ok) {
-            throw new Error(`Could not load settings for '${ApplicationName}'`);
+            //throw new Error(`Could not load settings for '${ApplicationName}'`);
         }
 
         let settings = await response.json();

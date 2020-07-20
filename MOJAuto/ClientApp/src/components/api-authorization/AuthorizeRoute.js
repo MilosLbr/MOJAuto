@@ -46,8 +46,8 @@ export default class AuthorizeRoute extends Component {
     }
 
     async populateAuthenticationState() {
-        const authenticated = await authService.isAuthenticated();
-        this.setState({ ready: true, authenticated });
+        //const authenticated = await authService.isAuthenticated();
+        this.setState({ ready: true, authenticated: false });
     };
 
     async authenticationChanged() {

@@ -15,12 +15,12 @@ export class LoginMenu extends Component {
     }
 
     componentDidMount() {
-        this._subscription = authService.subscribe(() => this.populateState());
-        this.populateState();
+        //this._subscription = authService.subscribe(() => this.populateState());
+        //this.populateState();
     }
 
     componentWillUnmount() {
-        authService.unsubscribe(this._subscription);
+        //authService.unsubscribe(this._subscription);
     }
 
     async populateState() {

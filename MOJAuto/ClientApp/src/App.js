@@ -27,9 +27,9 @@ export default class App extends Component {
     }
 
     async isUserAuthenticated() {
-        const isauth = await authService.isAuthenticated();
+        //const isauth = await authService.isAuthenticated();
         this.setState({
-            isAuthenticated: isauth
+            isAuthenticated: false
         });
     }
 
