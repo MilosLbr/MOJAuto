@@ -11,6 +11,7 @@ using MOJAuto.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace MOJAuto
 {
@@ -48,6 +49,7 @@ namespace MOJAuto
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
 
             services.AddControllersWithViews();
             services.AddRazorPages();

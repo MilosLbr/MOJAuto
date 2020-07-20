@@ -1,4 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import "alertifyjs/build/css/alertify.css";
+import "alertifyjs/build/css/themes/semantic.css";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
