@@ -49,7 +49,7 @@ export class LoginForm extends Component {
                 alertify.error(text);
             });
 
-            document.getElementById("submitLoginButton").setAttribute("disabled", false);
+            document.getElementById("submitLoginButton").removeAttribute("disabled");
         } else {
             let jsonResponse = await response.json();
             let token = jsonResponse.token;

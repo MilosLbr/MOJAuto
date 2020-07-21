@@ -9,7 +9,7 @@ import  myAuthService from './services/myAuthService';
 import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
-
+import alertify from "alertifyjs";
 
 import './css_styles/custom.css'
 
@@ -27,6 +27,7 @@ export default class App extends Component {
 
         this.isUserLoggedIn = this.isUserLoggedIn.bind(this);
         this.changeStateAfterLogin = this.changeStateAfterLogin.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     componentDidMount() {
@@ -43,21 +44,30 @@ export default class App extends Component {
     }
 
     changeStateAfterLogin(userName) {
-        console.log("callling in app js with", userName);
         this.setState({
             appUser: userName,
             isAuthenticated: true
         })
     }
 
+    logout(history) {
+        sessionStorage.removeItem("token");
+        alertify.success("Logged out!");
+        this.setState({
+            appUser: null,
+            isAuthenticated: false
+        });
+        history.push("/");
+    }
+
 
 
     render() {
         const { isAuthenticated, appUser } = this.state;
-
+        const logout = this.logout;
 
         return (
-            <Layout isAuthenticated={isAuthenticated} appUser={appUser}>
+            <Layout isAuthenticated={isAuthenticated} appUser={appUser} logout={logout}>
                 <Route exact path='/' render={(props) =>
                     <Home {...props}
                         isAuthenticated={isAuthenticated}

@@ -2,9 +2,9 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { NavItem, NavLink } from 'reactstrap';
+import { withRouter } from 'react-router-dom';
 
-
-export const MyLoginMenu = ({ isAuthenticated, appUser })=> {
+export const MyLoginMenu = ({ isAuthenticated, appUser, logout })=> {
     const profilePath = "/authentication/profile";
 
     if (isAuthenticated) {
@@ -14,7 +14,7 @@ export const MyLoginMenu = ({ isAuthenticated, appUser })=> {
                     <NavLink tag={Link} className="" to={profilePath}>Hello {appUser}</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink tag={Link} className="" to='/' >Logout</NavLink>
+                    <LogoutButton logout={logout}/>
                 </NavItem>
             </Fragment>
         )
@@ -23,3 +23,15 @@ export const MyLoginMenu = ({ isAuthenticated, appUser })=> {
     }
     
 }
+
+const LogoutButton = withRouter((props) => {
+
+    return (
+            <a
+                className="nav-link"
+                onClick={() => props.logout(props.history)}>
+                Logout
+            </a>
+        )
+    }
+);

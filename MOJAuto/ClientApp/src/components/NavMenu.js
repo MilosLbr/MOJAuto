@@ -35,7 +35,7 @@ export class NavMenu extends Component {
     }
 
     render() {
-        const { isAuthenticated , appUser } = this.props;
+        const { isAuthenticated , appUser, logout } = this.props;
 
         return (
             <header>
@@ -51,7 +51,7 @@ export class NavMenu extends Component {
                     <NavItem>
                         <NavLink tag={Link} className="" to="/fetch-data">Fetch data</NavLink>
                     </NavItem>
-                    <MyLoginMenu isAuthenticated={isAuthenticated} appUser={appUser}/>
+                    <MyLoginMenu logout={logout} isAuthenticated={isAuthenticated} appUser={appUser}/>
                     </ul>
                 </Collapse>
                 </Container>

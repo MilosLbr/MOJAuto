@@ -20,13 +20,12 @@ export default class myAuthService {
 
             let decodedToken = jwtDecode(token);
 
-            console.log(decodedToken, 'decoded token', Date.now(), decodedToken.exp * 1000, Date.now() >= decodedToken.exp * 1000);
-
             if (Date.now() >= decodedToken.exp * 1000) {
                 return false;
             }
             return true;
         }
+
         return false;
     }
 
