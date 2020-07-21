@@ -10,7 +10,9 @@ import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 
+
 import './css_styles/custom.css'
+
 
 export default class App extends Component {
     static displayName = App.name;
@@ -55,7 +57,7 @@ export default class App extends Component {
 
 
         return (
-            <Layout>
+            <Layout isAuthenticated={isAuthenticated} appUser={appUser}>
                 <Route exact path='/' render={(props) =>
                     <Home {...props}
                         isAuthenticated={isAuthenticated}
@@ -70,6 +72,7 @@ export default class App extends Component {
 
                 <Route path={ApplicationPaths.ApiAuthorizationPrefix}
                     component={ApiAuthorizationRoutes} />
+
             </Layout>
         );
     }
