@@ -43,7 +43,7 @@ namespace MOJAuto.Controllers
 
             if(user == null)
             {
-                return BadRequest("Invalid username or password!");
+                return BadRequest("Invalid email or password!");
             }
 
             var result = await _signInManager
@@ -71,7 +71,7 @@ namespace MOJAuto.Controllers
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
               _config["Jwt:Issuer"],
               claims,
-              expires: DateTime.Now.AddMinutes(120),
+              expires: DateTime.Now.AddDays(1),
               signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

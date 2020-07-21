@@ -3,6 +3,7 @@ import { Component } from 'react';
 import alertify from "alertifyjs";
 import authService from '../api-authorization/AuthorizeService';
 import { UserManager } from 'oidc-client';
+import myAuthService from '../../services/myAuthService';
 
 
 
@@ -12,8 +13,7 @@ export class LoginForm extends Component {
 
         this.state = {
             email: "",
-            password: "",
-            isSubmitDisabled: false
+            password: ""
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -21,9 +21,6 @@ export class LoginForm extends Component {
         this.sendPostRequest = this.sendPostRequest.bind(this);
     };
 
-    componentDidMount() {
-        
-    }
 
     handleInputChange(event) {
         this.setState({
@@ -34,38 +31,32 @@ export class LoginForm extends Component {
     submitForm(event) {
         event.preventDefault();
         
-        console.log(this.state, 'to submit for login');
         this.setState({
             isSubmitDisabled: true
         })
+
         this.sendPostRequest();
     }
 
-    async sendPostRequest() {
-
-        
-
+    async sendPostRequest() {       
+        document.getElementById("submitLoginButton").setAttribute("disabled", true);
         let postData = Object.assign({}, this.state);
 
-        const response = await fetch("/api/auth", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(postData)
-        });
-
+        const response = await myAuthService.logIn(postData);
         console.log(response);
         if (!response.ok) {
             response.text().then(text => {
-                console.log('should alert, ', alertify);
                 alertify.error(text);
-                this.setState({
-                    isSubmitDisabled: false
-                })
             });
+
+            document.getElementById("submitLoginButton").setAttribute("disabled", false);
         } else {
-           alertify.success("Loged in")
+            let jsonResponse = await response.json();
+            let token = jsonResponse.token;
+
+            sessionStorage.setItem("token", token);
+            alertify.success("Loged in");
+            this.props.changeStateAfterLogin(this.state.email);
         }
     }
 
@@ -80,7 +71,7 @@ export class LoginForm extends Component {
                     <label htmlFor="password">Password:</label>
                     <input onChange={this.handleInputChange} value={this.state.password} name="password" type="password" className="form-control" id="password" placeholder="Password"/>
                 </div>
-                <button id="submitLoginButton" className="btn btn-primary" disabled={this.state.isSubmitDisabled}>
+                <button id="submitLoginButton" className="btn btn-primary" >
                     Login
                 </button>
             </form>

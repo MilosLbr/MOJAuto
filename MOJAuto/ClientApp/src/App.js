@@ -5,6 +5,7 @@ import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import authService from './services/AuthorizeService';
+import  myAuthService from './services/myAuthService';
 import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
@@ -18,33 +19,57 @@ export default class App extends Component {
         super(props);
         this.state = {
             date: new Date(),
-            isAuthenticated: false
+            isAuthenticated: false,
+            appUser: null
         }
+
+        this.isUserLoggedIn = this.isUserLoggedIn.bind(this);
+        this.changeStateAfterLogin = this.changeStateAfterLogin.bind(this);
     }
 
     componentDidMount() {
-        this.isUserAuthenticated();
+        this.isUserLoggedIn();
     }
 
-    async isUserAuthenticated() {
-        //const isauth = await authService.isAuthenticated();
+    isUserLoggedIn() {
+        const isAuthenticated = myAuthService.isUserLoggedIn();
+        const appUser = myAuthService.getUserName();
         this.setState({
-            isAuthenticated: false
+            isAuthenticated,
+            appUser
         });
     }
 
+    changeStateAfterLogin(userName) {
+        console.log("callling in app js with", userName);
+        this.setState({
+            appUser: userName,
+            isAuthenticated: true
+        })
+    }
+
+
+
     render() {
-        const isAuthenticated = this.state.isAuthenticated;
+        const { isAuthenticated, appUser } = this.state;
 
 
         return (
             <Layout>
                 <Route exact path='/' render={(props) =>
-                    <Home {...props} isAuthenticated={isAuthenticated}/>
+                    <Home {...props}
+                        isAuthenticated={isAuthenticated}
+                        appUser={appUser}
+                        changeStateAfterLogin={this.changeStateAfterLogin} />
                 } />
-                <Route path='/counter' component={Counter} />
-                <AuthorizeRoute path='/fetch-data' component={FetchData} />
-                <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
+                <Route path='/counter'
+                    component={Counter} />
+
+                <AuthorizeRoute path='/fetch-data'
+                    component={FetchData} />
+
+                <Route path={ApplicationPaths.ApiAuthorizationPrefix}
+                    component={ApiAuthorizationRoutes} />
             </Layout>
         );
     }
