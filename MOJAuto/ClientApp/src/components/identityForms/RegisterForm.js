@@ -1,13 +1,16 @@
 ﻿import React from 'react'
 import { Component } from 'react';
+import alertify from 'alertifyjs';
+import myAuthService from '../../services/myAuthService';
+
 
 export class RegisterForm extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            registerEmail: "",
-            registerPassword: "",
+            userName: "",
+            password: "",
             confirmPassword: ""
         };
 
@@ -21,27 +24,48 @@ export class RegisterForm extends Component {
         })
     }
 
-    submitForm(event) {
+    async submitForm(event) {
         event.preventDefault();
-        if (this.state.confirmPassword !== this.state.registerPassword) {
-            console.log("Passwords dont match")
+        if (this.state.confirmPassword !== this.state.password) {
+            alertify.error("Lozinka i potvrđena lozinka se ne slažu!")
             return;
         }
-        console.log(this.state, 'to submit for register');
-        let btn = document.getElementById("submitRegisterButton");
-        btn.setAttribute("disabled", "true");
+
+        document.getElementById("submitRegisterButton").setAttribute("disabled", "true");
+
+        let postData = Object.assign({}, this.state);
+        const response = await myAuthService.register(postData);
+
+        if (!response.ok) {
+            response.text().then(text => {
+                let errorObj = JSON.parse(text);
+                alertify.error(errorObj[0].description);
+            });
+
+            document.getElementById("submitRegisterButton").removeAttribute("disabled");
+        } else {
+            alertify.success("Registracija uspešna!");
+
+            let loginRes = await myAuthService.logIn({ "userName": postData.userName, "password": postData.password });
+
+            if (loginRes) {
+                this.props.changeStateAfterLogin(this.state.userName);
+            } else {
+                alertify.error("Greška prilokom logovanja!");
+            }
+        }
     }
 
     render() {
         return (
             <form onSubmit={this.submitForm}>
                 <div className="form-group">
-                    <label htmlFor="registerEmail">Email address:</label>
-                    <input onChange={this.handleInputChange} value={this.state.registerEmail} name="registerEmail" type="email" className="form-control" id="registerEmail" aria-describedby="emailHelp" placeholder="Enter email" required />
+                    <label htmlFor="registerUserName">Username:</label>
+                    <input onChange={this.handleInputChange} value={this.state.userName} name="userName" type="text" className="form-control" id="registerUserName"  placeholder="Enter a unique username" required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="registerPassword">Password:</label>
-                    <input onChange={this.handleInputChange} value={this.state.registerPassword} name="registerPassword" type="password" className="form-control" id="registerPassword" placeholder="Password" />
+                    <input onChange={this.handleInputChange} value={this.state.password} name="password" type="password" className="form-control" id="registerPassword" placeholder="Password" />
                 </div>
                 <div className="form-group">
                     <label htmlFor="confirmPassword">Confirm Password:</label>

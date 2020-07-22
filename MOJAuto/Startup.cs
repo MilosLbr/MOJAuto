@@ -14,6 +14,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using AutoMapper;
+using MOJAuto.AutoMapper;
 
 namespace MOJAuto
 {
@@ -65,6 +67,7 @@ namespace MOJAuto
                 });
 
             services.AddRazorPages();
+            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

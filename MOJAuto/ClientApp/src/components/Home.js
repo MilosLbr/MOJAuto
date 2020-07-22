@@ -13,10 +13,10 @@ export const Home = ({ isAuthenticated, appUser,changeStateAfterLogin } ) => {
                 <div>
                     <Tabs defaultActiveKey="login" id="authenticationTab">
                         <Tab className="p-2"  eventKey="login" title="Login">
-                        <LoginForm changeStateAfterLogin={changeStateAfterLogin} />
+                            <LoginForm changeStateAfterLogin={changeStateAfterLogin} />
                         </Tab>
                         <Tab className="p-2" eventKey="register" title="Register">
-                            <RegisterForm />
+                            <RegisterForm changeStateAfterLogin={changeStateAfterLogin}/>
                         </Tab>
                     </Tabs>
                 </div>

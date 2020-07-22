@@ -2,16 +2,39 @@
 
 export default class myAuthService {
 
-    static logIn(loginUserDto) {
-        return fetch("/api/auth", {
+    static async logIn(loginUserDto) {
+        const response = await fetch("/api/auth/loginuser", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(loginUserDto)
         });
+        
+        if (!response.ok) {
+            let  responseInvalid = await response.text().then(text => {
+                return { "success": false, "text": text }
+            });
+
+            return responseInvalid;
+        } else {
+            let jsonResponse = await response.json();
+            let token = jsonResponse.token;
+
+            sessionStorage.setItem("token", token);
+            return { "success": true };
+        }
     }
 
+    static register(registerUserDto) {
+        return fetch("/api/auth/registeruser", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(registerUserDto)
+        });
+    }
 
     static isUserLoggedIn() {
         let token = sessionStorage.getItem("token");
@@ -34,7 +57,8 @@ export default class myAuthService {
 
         if (token !== null) {
             let decodedToken = jwtDecode(token);
-            return decodedToken.email;
+
+            return decodedToken.nameid;
 
         }
         return null;

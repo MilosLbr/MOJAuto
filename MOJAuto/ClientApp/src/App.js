@@ -51,7 +51,7 @@ export default class App extends Component {
 
     logout(history) {
         sessionStorage.removeItem("token");
-        alertify.success("Logged out!");
+        alertify.success("Izlogovan!");
         this.setState({
             appUser: null,
             isAuthenticated: false

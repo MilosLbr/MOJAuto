@@ -10,7 +10,7 @@ export class LoginForm extends Component {
         super(props);
 
         this.state = {
-            email: "",
+            userName: "",
             password: ""
         };
 
@@ -40,21 +40,16 @@ export class LoginForm extends Component {
         document.getElementById("submitLoginButton").setAttribute("disabled", true);
         let postData = Object.assign({}, this.state);
 
-        const response = await myAuthService.logIn(postData);
-        console.log(response);
-        if (!response.ok) {
-            response.text().then(text => {
-                alertify.error(text);
-            });
+        const loginStatus = await myAuthService.logIn(postData);
+
+        if (!loginStatus.success) {
+            alertify.error(loginStatus.text);
 
             document.getElementById("submitLoginButton").removeAttribute("disabled");
         } else {
-            let jsonResponse = await response.json();
-            let token = jsonResponse.token;
-
-            sessionStorage.setItem("token", token);
-            alertify.success("Loged in");
-            this.props.changeStateAfterLogin(this.state.email);
+            
+            alertify.success("Uspešno!");
+            this.props.changeStateAfterLogin(this.state.userName);
         }
     }
 
@@ -62,8 +57,8 @@ export class LoginForm extends Component {
         return (
             <form onSubmit={this.submitForm}>
                 <div className="form-group">
-                    <label htmlFor="email">Email address:</label>
-                    <input onChange={this.handleInputChange} value={this.state.email} name="email" type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" required/>
+                    <label htmlFor="userName">Username:</label>
+                    <input onChange={this.handleInputChange} value={this.state.userName} name="userName" type="text" className="form-control" id="userName"placeholder="Enter your username" required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="password">Password:</label>
