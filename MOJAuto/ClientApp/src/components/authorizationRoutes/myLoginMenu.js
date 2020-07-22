@@ -11,9 +11,6 @@ export const MyLoginMenu = ({ isAuthenticated, appUser, logout })=> {
         return (
             <Fragment>
                 <NavItem>
-                    <NavLink tag={Link} className="" to={profilePath}>Hello {appUser}</NavLink>
-                </NavItem>
-                <NavItem>
                     <LogoutButton logout={logout}/>
                 </NavItem>
             </Fragment>

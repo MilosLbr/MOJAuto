@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import authService from '../services/AuthorizeService'
+import myAuthService from '../services/myAuthService';
 
 export class FetchData extends Component {
   static displayName = FetchData.name;
@@ -53,7 +54,7 @@ export class FetchData extends Component {
   }
 
   async populateWeatherData() {
-    const token = await authService.getAccessToken();
+    const token = await myAuthService.getAccessToken();
     const response = await fetch('weatherforecast', {
       headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
     });

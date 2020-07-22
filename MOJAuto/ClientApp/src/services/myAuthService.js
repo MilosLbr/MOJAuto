@@ -40,4 +40,13 @@ export default class myAuthService {
         return null;
     }
 
+    static getAccessToken() {
+        let token = sessionStorage.getItem("token");
+
+        if (token !== null) {
+            return token;
+        }
+        return null;
+    }
+
 }

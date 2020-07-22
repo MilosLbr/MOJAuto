@@ -6,7 +6,7 @@ import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import authService from './services/AuthorizeService';
 import  myAuthService from './services/myAuthService';
-import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
+import AuthorizeRoute from './components/authorizationRoutes/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 import alertify from "alertifyjs";
@@ -68,6 +68,7 @@ export default class App extends Component {
 
         return (
             <Layout isAuthenticated={isAuthenticated} appUser={appUser} logout={logout}>
+
                 <Route exact path='/' render={(props) =>
                     <Home {...props}
                         isAuthenticated={isAuthenticated}
@@ -77,7 +78,7 @@ export default class App extends Component {
                 <Route path='/counter'
                     component={Counter} />
 
-                <AuthorizeRoute path='/fetch-data'
+                <AuthorizeRoute path='/fetch-data' isAuthenticated={isAuthenticated}
                     component={FetchData} />
 
                 <Route path={ApplicationPaths.ApiAuthorizationPrefix}
