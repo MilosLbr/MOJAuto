@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import authService from '../services/AuthorizeService'
 import myAuthService from '../services/myAuthService';
 
 export class FetchData extends Component {

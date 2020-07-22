@@ -1,11 +1,9 @@
 ﻿import React from 'react';
 import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import { NavItem, NavLink } from 'reactstrap';
+import { NavItem } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 
-export const MyLoginMenu = ({ isAuthenticated, appUser, logout })=> {
-    const profilePath = "/authentication/profile";
+export const MyLoginMenu = ({ isAuthenticated,  logout })=> {
 
     if (isAuthenticated) {
         return (
@@ -24,11 +22,11 @@ export const MyLoginMenu = ({ isAuthenticated, appUser, logout })=> {
 const LogoutButton = withRouter((props) => {
 
     return (
-            <a
-                className="nav-link"
+        <button  
+                className="btn btn-link nav-link"
                 onClick={() => props.logout(props.history)}>
                 Logout
-            </a>
+            </button>
         )
     }
 );

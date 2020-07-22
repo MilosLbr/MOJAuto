@@ -1,8 +1,6 @@
 ﻿import React from 'react'
 import { Component } from 'react';
 import alertify from "alertifyjs";
-import authService from '../api-authorization/AuthorizeService';
-import { UserManager } from 'oidc-client';
 import myAuthService from '../../services/myAuthService';
 
 

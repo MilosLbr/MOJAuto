@@ -6,11 +6,6 @@ import { Tabs, Tab } from 'react-bootstrap';
 export const Home = ({ isAuthenticated, appUser,changeStateAfterLogin } ) => {
     
     let isUserAuthenticated = isAuthenticated;
-    let forms;
-
-    if (!isUserAuthenticated) {
-        forms = <LoginForm />;
-    }
 
     return (
         <div>
