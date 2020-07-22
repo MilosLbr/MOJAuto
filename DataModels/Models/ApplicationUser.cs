@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MOJAuto.Models
+namespace DataModels.Models
 {
     public class ApplicationUser : IdentityUser
     {

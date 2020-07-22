@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using DTOs;
-using MOJAuto.Models;
+using DataModels.Models;
 
 namespace MOJAuto.AutoMapper
 {

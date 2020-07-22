@@ -1,0 +1,3 @@
+﻿Theese files are created with template.
+They are not used, custom files with this functionality is used.
+Deleting theese files causes compile error.
