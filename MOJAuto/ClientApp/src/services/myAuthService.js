@@ -57,8 +57,8 @@ export default class myAuthService {
 
         if (token !== null) {
             let decodedToken = jwtDecode(token);
-
-            return decodedToken.nameid;
+            
+            return decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
 
         }
         return null;

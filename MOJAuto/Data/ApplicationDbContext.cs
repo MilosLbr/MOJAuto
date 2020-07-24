@@ -17,5 +17,8 @@ namespace MOJAuto.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+
+        public DbSet<Car> Cars { get; set; }
+
     }
 }

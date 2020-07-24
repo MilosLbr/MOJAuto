@@ -12,8 +12,14 @@ namespace MOJAuto.AutoMapper
     {
         public MappingProfiles()
         {
+            // app user
             CreateMap<LoginUserDto, ApplicationUser>();
             CreateMap<RegisterUserDto, ApplicationUser>();
+            CreateMap<ApplicationUser, ApplicationUserBasicInfoDto>();
+
+            // cars
+            CreateMap<CarCreateDto, Car>();
+            CreateMap<Car, CarInfoDto>();
         }
     }
 }

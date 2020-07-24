@@ -8,5 +8,6 @@ namespace DataModels.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        public virtual ICollection<Car> MyCars { get; set; }
     }
 }

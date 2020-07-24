@@ -16,6 +16,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using AutoMapper;
 using MOJAuto.AutoMapper;
+using MOJAuto.Repository;
+using System.Security.Claims;
 
 namespace MOJAuto
 {
@@ -31,9 +33,11 @@ namespace MOJAuto
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<ApplicationDbContext>(options => {
+                options.UseLazyLoadingProxies();
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -45,7 +49,9 @@ namespace MOJAuto
                 options.Password.RequiredUniqueChars = 1;
             });
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddDefaultIdentity<ApplicationUser>(options => {
+                options.SignIn.RequireConfirmedAccount = false;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
@@ -66,7 +72,10 @@ namespace MOJAuto
                     };
                 });
 
+            services.AddScoped<IMOJAutoRepository<Car>, MOJAutoRepository<Car>>();
+
             services.AddRazorPages();
+            services.AddMvc();
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

@@ -82,8 +82,8 @@ namespace MOJAuto.Controllers
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             
             var claims = new[] {
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.NameId, userInfo.UserName)
+                new Claim(ClaimTypes.NameIdentifier, userInfo.Id.ToString()),
+                new Claim(ClaimTypes.Name, userInfo.UserName)
             };
 
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
