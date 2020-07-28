@@ -8,7 +8,7 @@ namespace DataModels.Models
     {
         public int Id { get; set; }
         public string Model { get; set; }
-        public double Kilometrage { get; set; }
+        public long Kilometrage { get; set; }
         public int ManufactureYear { get; set; }
         public int EngineCubicCapacity { get; set; }
         public int EnginePowerKW { get; set; }
