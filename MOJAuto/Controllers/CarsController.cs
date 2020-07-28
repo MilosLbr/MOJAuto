@@ -19,10 +19,10 @@ namespace MOJAuto.Controllers
     public class CarsController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IMOJAutoRepository<Car> _carRepo;
+        private readonly IMOJAutoRepository _carRepo;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public CarsController(IMapper mapper, IMOJAutoRepository<Car> carRepo, UserManager<ApplicationUser> userManager)
+        public CarsController(IMapper mapper, IMOJAutoRepository carRepo, UserManager<ApplicationUser> userManager)
         {
             _mapper = mapper;
             _carRepo = carRepo;
@@ -32,10 +32,19 @@ namespace MOJAuto.Controllers
         [HttpGet("getAllCars")]
         public async Task<IActionResult> GetAllCars()
         {
-            var allCars = await _carRepo.GetAll();
+            var allCars = await _carRepo.GetAll<Car>();
             var allCarsDto = _mapper.Map<IEnumerable<CarInfoDto>>(allCars);
 
             return Ok(allCarsDto);
+        }
+
+        [HttpGet("getCarsForUser")]
+        public async Task<IActionResult> GetCarsForUser()
+        {
+            var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            var usersCars = _mapper.Map<IEnumerable<CarInfoDto>>(currentUser.MyCars);
+
+            return Ok(usersCars);
         }
 
         [HttpPost("addCar")]

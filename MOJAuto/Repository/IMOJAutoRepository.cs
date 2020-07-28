@@ -6,20 +6,18 @@ using System.Threading.Tasks;
 
 namespace MOJAuto.Repository
 {
-    public interface IMOJAutoRepository<TEntity> where TEntity : class
+    public interface IMOJAutoRepository
     {
         // create
-        void Add(TEntity entity);
-        void AddRange(IEnumerable<TEntity> entities);
+        void Add<TEntity>(TEntity entity) where TEntity : class;
 
         // delete
-        void Delete(TEntity entity);
-        void DeleteRange(IEnumerable<TEntity> entities);
+        void Delete<TEntity>(TEntity entity) where TEntity : class;
 
         // read
-        Task<TEntity> GetById(int Id);
-        Task<IEnumerable<TEntity>> GetAll(); 
-        IQueryable<TEntity> Filter(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> GetById<TEntity>(int Id) where TEntity : class;
+        Task<IEnumerable<TEntity>> GetAll<TEntity>() where TEntity : class;
+        IQueryable<TEntity> Filter<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class;
 
         Task<bool> SaveAll();
 

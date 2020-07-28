@@ -7,50 +7,39 @@ using System.Threading.Tasks;
 
 namespace MOJAuto.Repository
 {
-    public class MOJAutoRepository<TEntity> : IMOJAutoRepository<TEntity> where TEntity : class
+    public class MOJAutoRepository : IMOJAutoRepository
     {
         private readonly ApplicationDbContext _context;
-        private readonly DbSet<TEntity> Entities;
 
         public MOJAutoRepository(ApplicationDbContext context)
         {
             _context = context;
-            Entities = _context.Set<TEntity>();
         }
 
-        public void Add(TEntity entity)
+        public void Add<TEntity>(TEntity entity) where TEntity : class
         {
-            Entities.Add(entity);
+            _context.Add(entity);
         }
 
-        public void AddRange(IEnumerable<TEntity> entities)
+
+        public void Delete<TEntity>(TEntity entity) where TEntity : class
         {
-            Entities.AddRange(entities);
+            _context.Remove(entity);
         }
 
-        public void Delete(TEntity entity)
+        public IQueryable<TEntity> Filter<TEntity>(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate) where TEntity : class
         {
-            Entities.Remove(entity);
+            return _context.Set<TEntity>().Where(predicate);
         }
 
-        public void DeleteRange(IEnumerable<TEntity> entities)
+        public async Task<IEnumerable<TEntity>> GetAll<TEntity>() where TEntity : class
         {
-            Entities.RemoveRange(entities);
+            return await _context.Set<TEntity>().ToListAsync();
         }
 
-        public IQueryable<TEntity> Filter(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntity> GetById<TEntity>(int Id) where TEntity : class
         {
-            return Entities.Where(predicate);
-        }
-
-        public async Task<IEnumerable<TEntity>> GetAll()
-        {
-            return await Entities.ToListAsync();
-        }
-
-        public async Task<TEntity> GetById(int Id)
-        {
-            return await Entities.FindAsync(Id);
+            return await _context.Set<TEntity>().FindAsync(Id);
         }
 
         public async Task<bool> SaveAll()

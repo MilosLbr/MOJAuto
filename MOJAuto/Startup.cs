@@ -72,7 +72,7 @@ namespace MOJAuto
                     };
                 });
 
-            services.AddScoped<IMOJAutoRepository<Car>, MOJAutoRepository<Car>>();
+            services.AddScoped<IMOJAutoRepository, MOJAutoRepository>();
 
             services.AddRazorPages();
             services.AddMvc();
