@@ -20,6 +20,11 @@ namespace MOJAuto.AutoMapper
             // cars
             CreateMap<CarCreateDto, Car>();
             CreateMap<Car, CarInfoDto>();
+            CreateMap<Car, CarBasicInfoDto>();
+
+            // registration
+            CreateMap<Registration, RegistrationInfoDto>();
+            CreateMap<RegistrationCreateDto, Registration>();
         }
     }
 }
