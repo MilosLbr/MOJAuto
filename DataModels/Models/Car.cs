@@ -17,5 +17,6 @@ namespace DataModels.Models
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         public virtual ICollection<Registration> Registrations { get; set; }
+        public virtual ICollection<FuelUsage> FuelUsages { get; set; }
     }
 }

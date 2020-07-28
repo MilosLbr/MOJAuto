@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataModels.Models
+namespace DTOs
 {
-    public class FuelUsage
+    public class FuelUsageDto
     {
         public int Id { get; set; }
         public DateTime DateFilled { get; set; }
@@ -12,9 +12,5 @@ namespace DataModels.Models
         public long Kilometrage { get; set; }
         public int LitersFilled { get; set; }
         public string GasStationName { get; set; }
-
-        public int CarId { get; set; }
-        public virtual Car Car { get; set; }
-
     }
 }
