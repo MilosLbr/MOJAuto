@@ -13,6 +13,8 @@ namespace DataModels.Models
         public int TotalPrice { get; set; }
         public string AdditionalComment { get; set; }
 
+        public int CarId { get; set; }
+        public virtual Car Car { get; set; }
 
     }
 }

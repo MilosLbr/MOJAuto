@@ -16,5 +16,6 @@ namespace DataModels.Models
         public string ApplicationUserId { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
 
+        public virtual ICollection<Registration> Registrations { get; set; }
     }
 }
