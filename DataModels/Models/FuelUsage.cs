@@ -10,5 +10,8 @@ namespace DataModels.Models
         public DateTime DateFilled { get; set; }
         public int Price { get; set; }
         public long Kilometrage { get; set; }
+        public int LitersFilled { get; set; }
+        public string GasStationName { get; set; }
+
     }
 }
