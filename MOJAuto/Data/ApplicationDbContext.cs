@@ -19,6 +19,7 @@ namespace MOJAuto.Data
         }
 
         public DbSet<Car> Cars { get; set; }
+        public DbSet<Registration> Registrations { get; set; }
 
     }
 }
