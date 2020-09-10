@@ -32,6 +32,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20200910161002_CreateServicesTable.cs" />
+    <Compile Remove="Data\Migrations\20200910161002_CreateServicesTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200910163134_ccc.cs" />
+    <Compile Remove="Data\Migrations\20200910163134_ccc.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DataModels\DataModels.csproj" />
     <ProjectReference Include="..\DTOs\DTOs.csproj" />
   </ItemGroup>
