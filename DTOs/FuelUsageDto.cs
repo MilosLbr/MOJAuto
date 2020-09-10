@@ -12,5 +12,7 @@ namespace DTOs
         public long Kilometrage { get; set; }
         public int LitersFilled { get; set; }
         public string GasStationName { get; set; }
+        public int CarId { get; set; }
+        public virtual CarBasicInfoDto Car { get; set; }
     }
 }

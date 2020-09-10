@@ -25,6 +25,9 @@ namespace MOJAuto.AutoMapper
             // registration
             CreateMap<Registration, RegistrationInfoDto>();
             CreateMap<RegistrationCreateDto, Registration>();
+
+            // fuel usage
+            CreateMap<FuelUsage, FuelUsageDto>().ReverseMap();
         }
     }
 }

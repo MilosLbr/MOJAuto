@@ -56,11 +56,11 @@ namespace MOJAuto.Controllers
             currentUser.MyCars.Add(carToCreate);
 
             if(await _carRepo.SaveAll()){
-                return Ok("Created!");
+                return Ok("Novi auto je ubačen!");
             }
             else
             {
-                return BadRequest("Error happened while adding new Car!");
+                return BadRequest("Dogodila se greška prilikom upisivanja novog automobila!");
             }
         }
     }

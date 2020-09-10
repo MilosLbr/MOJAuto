@@ -71,7 +71,7 @@ namespace MOJAuto.Controllers
 
             if (result.Succeeded)
             {
-                return Ok("Registered!");
+                return Ok("Registracija uspešna!");
             }
 
             return BadRequest(result.Errors);
