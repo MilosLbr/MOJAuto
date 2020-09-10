@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataModels.Models
+namespace DTOs
 {
-    public class Services
+    public class ServiceDto
     {
         public int Id { get; set; }
         public DateTime DateOfService { get; set; }
@@ -14,7 +14,6 @@ namespace DataModels.Models
         public string Comment { get; set; }
 
         public int CarId { get; set; }
-        public virtual Car Car { get; set; }
-
+        public virtual CarBasicInfoDto Car { get; set; }
     }
 }
