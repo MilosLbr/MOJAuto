@@ -74,6 +74,7 @@ export default class App extends Component {
                         appUser={appUser}
                         changeStateAfterLogin={this.changeStateAfterLogin} />
                 } />
+
                 <Route path='/counter'
                     component={Counter} />
 

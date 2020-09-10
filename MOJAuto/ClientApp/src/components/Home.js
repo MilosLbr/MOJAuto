@@ -2,10 +2,11 @@ import React from 'react';
 import { LoginForm } from './identityForms/LoginForm';
 import { RegisterForm } from './identityForms/RegisterForm';
 import { Tabs, Tab } from 'react-bootstrap';
+import { UsersCars } from './UsersCars';
 
 export const Home = ({ isAuthenticated, appUser,changeStateAfterLogin } ) => {
     
-    let isUserAuthenticated = isAuthenticated;
+    let isUserAuthenticated = isAuthenticated;    
 
     return (
         <div>
@@ -23,12 +24,15 @@ export const Home = ({ isAuthenticated, appUser,changeStateAfterLogin } ) => {
             }
             {isUserAuthenticated &&
                 <div>
-                    <h3 className="font-weight-normal">
+                    <h3 className="font-weight-normal mb-5">
                         Welcome &nbsp;  
                         <span className="font-weight-bold">{appUser}</span>
                     </h3>
+
+                    <UsersCars/>
                 </div>
             }
         </div>            
     );
 }
+
