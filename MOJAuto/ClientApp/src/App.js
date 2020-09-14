@@ -11,6 +11,7 @@ import { ApplicationPaths } from './components/api-authorization/ApiAuthorizatio
 import alertify from "alertifyjs";
 
 import './css_styles/custom.css'
+import { Registracije } from './components/Registracije';
 
 
 export default class App extends Component {
@@ -74,6 +75,8 @@ export default class App extends Component {
                         appUser={appUser}
                         changeStateAfterLogin={this.changeStateAfterLogin} />
                 } />
+
+                <AuthorizeRoute path="/registracije/:id?" isAuthenticated={isAuthenticated} component={Registracije}/>
 
                 <Route path='/counter'
                     component={Counter} />

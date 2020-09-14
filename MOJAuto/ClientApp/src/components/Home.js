@@ -25,7 +25,7 @@ export const Home = ({ isAuthenticated, appUser,changeStateAfterLogin } ) => {
             {isUserAuthenticated &&
                 <div>
                     <h3 className="font-weight-normal mb-5">
-                        Welcome &nbsp;  
+                        Zdravo &nbsp;
                         <span className="font-weight-bold">{appUser}</span>
                     </h3>
 

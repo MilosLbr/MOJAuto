@@ -4,13 +4,11 @@ import { Route, Redirect } from 'react-router-dom'
 import alertify from 'alertifyjs';
 
 export default class AuthorizeRoute extends Component {
-    constructor(props) {
-        super(props);
-    }
+    
 
     render() {
-        const { isAuthenticated } = this.props;
-
+        const { isAuthenticated }  = this.props;
+        
         const { component: Component, ...rest } = this.props;
 
         return <Route {...rest}
@@ -19,7 +17,7 @@ export default class AuthorizeRoute extends Component {
                     
                     return <Component {...props} />
                 } else {
-                    { alertify.error("Morate biti ulogovani")}
+                    alertify.error("Morate biti ulogovani")
                     return <Redirect to="/" />
                 }
             }} />
