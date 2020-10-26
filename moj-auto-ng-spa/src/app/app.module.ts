@@ -6,16 +6,18 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { NavModule } from './nav/nav.module';
+import { DummyComponent } from './dummy/dummy.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    DummyComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NavModule
+    NavModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

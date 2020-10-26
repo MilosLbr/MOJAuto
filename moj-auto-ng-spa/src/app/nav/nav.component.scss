@@ -3,7 +3,25 @@
     flex: 1 1 auto;
   }
 
-  .brand {
+  .nav-link {
+    padding: 0.5rem;
+    opacity: 0.8;
+    font-size: 1rem;
+    color: white;
+    text-decoration: none;
+  }
+
+  .active {
+      opacity: 1;
+  }
+
+  .nav-link:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  .nav-link-brand {
+    opacity: 0.95;
     font-size: 1.25rem;
   }
 
@@ -12,16 +30,5 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    .nav-link {
-      padding: 0.5rem;
-      opacity: 0.8;
-      font-size: 1rem;
-    }
-
-    .nav-link:hover {
-      opacity: 1;
-      cursor: pointer;
-    }
   }
 }
