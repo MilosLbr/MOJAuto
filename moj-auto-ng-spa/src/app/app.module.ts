@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { NavModule } from './nav/nav.module';
 import { DummyComponent } from './dummy/dummy.component';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { DummyComponent } from './dummy/dummy.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     NavModule,
+    HomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
