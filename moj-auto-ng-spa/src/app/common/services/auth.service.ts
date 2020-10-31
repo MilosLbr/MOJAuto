@@ -7,6 +7,7 @@ import { UserLoginDto } from '../models/UserLoginDto';
 import { catchError, map } from 'rxjs/operators';
 import { AlertifyService } from './alertify.service';
 import { of } from 'rxjs';
+import { UserRegisterDto } from '../models/UserRegisterDto';
 
 @Injectable({
     providedIn: "root"
@@ -31,5 +32,10 @@ export class AuthService {
                 }
             })            
         )
+    }
+
+    registerUser(userRegisterDto: UserRegisterDto) {
+        const url = `${this.baseUrl}/auth/registeruser`;
+        return this.http.post(url, userRegisterDto);
     }
 }
