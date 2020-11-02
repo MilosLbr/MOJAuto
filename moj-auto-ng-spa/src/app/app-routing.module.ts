@@ -7,6 +7,15 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
   },
+  {
+    path: 'registracije',
+    loadChildren: () => import('./registrations/registrations.module').then(m => m.RegistrationsModule)
+  },
+  {
+    path: 'servisi',
+    loadChildren: () => import('./car-services/car-services.module').then(m => m.CarServicesModule)
+  }
+  ,
   { 
     path: '**', 
     redirectTo: '', 

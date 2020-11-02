@@ -9,7 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatCardModule } from '@angular/material/card';
-import {MatListModule} from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import {MatListModule} from '@angular/material/list';
     MatButtonModule,
     MatCardModule,
     CommonModule,
-    MatListModule
+    MatListModule,
+    RouterModule
   ],
   declarations: [
     HomeComponent,
