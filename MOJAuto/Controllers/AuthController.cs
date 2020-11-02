@@ -71,6 +71,7 @@ namespace MOJAuto.Controllers
 
             if (result.Succeeded)
             {
+                Response.ContentType = "application/json";
                 return Ok("Registracija uspešna!");
             }
 

@@ -1,0 +1,37 @@
+<div class="register-form-container">
+  <form [formGroup]="registerForm" (ngSubmit)="onFormSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Korisničko ime</mat-label>
+      <input matInput autocomplete="off" [formControl]="userNameControl" />
+    </mat-form-field>
+
+    <br />
+    <div [formGroupName]="'passwordGroup'">
+      <mat-form-field appearance="fill">
+        <mat-label>Lozinka</mat-label>
+        <input matInput type="password" [formControl]="passwordControl" />
+      </mat-form-field>
+
+      <br />
+      <mat-form-field appearance="fill">
+        <mat-label>Potvrdi lozinku</mat-label>
+        <input
+          matInput
+          type="password"
+          [formControl]="passwordConfirmControl"
+        />
+      </mat-form-field>
+      
+      <mat-error class="error-alert" *ngIf="passwordsAreNotTheSame && passwordConfirmControl.touched">
+        Lozinka i potvrdjena lozinka nisu iste!
+      </mat-error>
+    </div>
+
+    <div class="form-footer">
+      <button mat-raised-button color="warn" [disabled]="registerForm.invalid" >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
+
