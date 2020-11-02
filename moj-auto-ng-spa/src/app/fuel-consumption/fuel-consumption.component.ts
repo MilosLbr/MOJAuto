@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-fuel-consumption',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FuelConsumptionComponent implements OnInit {
 
-  constructor() { }
+  carId: number;
+
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.carId = +this.route.snapshot.params['id'] ;
   }
 
 }

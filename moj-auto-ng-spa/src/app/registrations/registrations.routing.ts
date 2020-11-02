@@ -7,6 +7,10 @@ const routes: Route[] = [
     path: '',
     component: RegistrationsComponent,
   },
+  {
+    path: ':id',
+    component: RegistrationsComponent,
+  }
 ];
 
 @NgModule({

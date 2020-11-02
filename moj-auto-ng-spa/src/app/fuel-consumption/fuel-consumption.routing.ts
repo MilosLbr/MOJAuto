@@ -6,6 +6,10 @@ const routes: Route[] = [
     {
         path: "",
         component: FuelConsumptionComponent
+    },
+    {
+        path: ":id",
+        component: FuelConsumptionComponent
     }
 ]
 
