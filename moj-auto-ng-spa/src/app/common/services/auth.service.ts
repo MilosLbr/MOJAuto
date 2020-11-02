@@ -1,12 +1,12 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment';
 import { LoginResponse } from '../models/LoginResponse';
 import { UserLoginDto } from '../models/UserLoginDto';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AlertifyService } from './alertify.service';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { UserRegisterDto } from '../models/UserRegisterDto';
 
 @Injectable({
@@ -17,6 +17,7 @@ export class AuthService {
     baseUrl = environment.apiUrl;
     jwtHelper = new JwtHelperService();
     decodedToken;
+    isUserLoggedIn: Subject<boolean> = new Subject<boolean>();
 
     constructor( private http: HttpClient, private alertifyService: AlertifyService){}
 
@@ -29,6 +30,7 @@ export class AuthService {
                     sessionStorage.setItem("token" , res.token);
                     this.decodedToken = this.jwtHelper.decodeToken(res.token);
                     sessionStorage.setItem("username", this.decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]);
+                    this.isUserLoggedIn.next(true);
                 }
             })            
         )
@@ -37,5 +39,26 @@ export class AuthService {
     registerUser(userRegisterDto: UserRegisterDto) {
         const url = `${this.baseUrl}/auth/registeruser`;
         return this.http.post(url, userRegisterDto);
+    }
+
+    logoutUser() {
+        const token = sessionStorage.getItem("token");
+        if(token) {
+            sessionStorage.removeItem("token");
+            sessionStorage.removeItem("username");
+            this.isUserLoggedIn.next(false);
+            this.alertifyService.success("Uspešna odjava!");
+        }
+    }
+
+    checkIsUserLoggedIn() {
+        const token = sessionStorage.getItem('token');
+        const isLoggedIn = !this.jwtHelper.isTokenExpired(token);
+        this.isUserLoggedIn.next(isLoggedIn);
+    }
+
+    getToken() {        
+        const token = sessionStorage.getItem('token');
+        return token;
     }
 }

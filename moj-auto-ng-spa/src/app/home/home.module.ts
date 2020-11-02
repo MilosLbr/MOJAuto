@@ -1,30 +1,32 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 import { HomeComponent } from './home.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import {MatInputModule} from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MatCardModule } from '@angular/material/card';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
-    imports: [
-        MatTabsModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        CommonModule
-    ],
-    declarations: [
-        HomeComponent,
-        LoginComponent,
-        RegisterComponent
-    ],
-    exports : [
-        HomeComponent
-    ]
+  imports: [
+    MatTabsModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCardModule,
+    CommonModule,
+    MatListModule
+  ],
+  declarations: [
+    HomeComponent,
+    LoginComponent,
+    RegisterComponent,
+    DashboardComponent,
+  ],
+  exports: [HomeComponent],
 })
-export class HomeModule {
-
-}
+export class HomeModule {}
