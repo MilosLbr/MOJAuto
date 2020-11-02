@@ -14,8 +14,11 @@ const routes: Routes = [
   {
     path: 'servisi',
     loadChildren: () => import('./car-services/car-services.module').then(m => m.CarServicesModule)
-  }
-  ,
+  },
+  {
+    path: 'gorivo',
+    loadChildren: () => import('./fuel-consumption/fuel-consumption.module').then(m => m.FuelConsumptionModule)
+  },
   { 
     path: '**', 
     redirectTo: '', 
