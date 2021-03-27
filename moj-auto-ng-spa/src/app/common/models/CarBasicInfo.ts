@@ -1,4 +1,4 @@
 export class CarBasicInfo {
-  Id: number;
-  Model: string;
+  id: number;
+  model: string;
 }

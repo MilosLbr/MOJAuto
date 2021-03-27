@@ -7,6 +7,7 @@ import { RegistrationsRoutingModule } from './registrations.routing';
 import { RegistrationEffects } from './store/registrations.effects';
 import { registrationsReducer } from './store/registrations.reducer';
 import { registrationsStoreName } from './store/registrations.store';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { registrationsStoreName } from './store/registrations.store';
     CommonModule,
     StoreModule.forFeature(registrationsStoreName, registrationsReducer),
     EffectsModule.forFeature([RegistrationEffects]),
+    MatTableModule,
   ],
   declarations: [RegistrationsComponent],
 })

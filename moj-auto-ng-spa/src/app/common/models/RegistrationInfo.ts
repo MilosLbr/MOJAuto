@@ -8,5 +8,5 @@ export class RegistrationInfo {
   totalPrice: number;
   additionalComment: string;
   carId: number;
-  carBasicInfoDto: CarBasicInfo;
+  car: CarBasicInfo;
 }
