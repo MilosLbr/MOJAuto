@@ -76,11 +76,12 @@ namespace MOJAuto.Controllers
         {
             var registrationToCreate = _mapper.Map<Registration>(registrationCreateDto);
 
-            _carRepo.Add(registrationToCreate);
+            _carRepo.Add(registrationToCreate);            
 
             if(await _carRepo.SaveAll())
             {
-                return Ok("Registracija je upisana!");
+                var registrationInfo = _mapper.Map<RegistrationInfoDto>(registrationToCreate);
+                return Ok(registrationInfo);
             }
             else
             {
