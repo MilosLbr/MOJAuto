@@ -1,10 +1,7 @@
 import { createAction, props } from '@ngrx/store';
-import { RegistrationCreateInfo } from 'src/app/common/models/RegistrationCreateInfo';
 import { RegistrationInfo } from 'src/app/common/models/RegistrationInfo';
 
-export const getRegistrationsForUser = createAction(
-    '[Registrations] Get registrations for user'
-);
+export const getRegistrationsForUser = createAction('[Registrations] Get registrations for user');
 export const getRegistrationsForUserSuccess = createAction(
     '[Registrations] Get registrations for user success',
     props<{ registrations: RegistrationInfo[] }>()
@@ -29,7 +26,7 @@ export const getRegistrationsForCarFail = createAction(
 
 export const createRegistrationEntry = createAction(
     '[Registrations] Create registration entry',
-    props<{ registration: RegistrationCreateInfo }>()
+    props<{ registration: RegistrationInfo }>()
 );
 export const createRegistrationEntrySuccess = createAction(
     '[Registrations] Create registration entry success',
@@ -37,5 +34,18 @@ export const createRegistrationEntrySuccess = createAction(
 );
 export const createRegistrationEntryFail = createAction(
     '[Registrations] Create registration entry fail',
+    props<{ error: string }>()
+);
+
+export const updateRegistrationEntry = createAction(
+    '[Registrations] Update registration entry',
+    props<{ registration: RegistrationInfo }>()
+);
+export const updateRegistrationEntrySuccess = createAction(
+    '[Registrations] Update registration entry success',
+    props<{ registration: RegistrationInfo }>()
+);
+export const updateRegistrationEntryFail = createAction(
+    '[Registrations] Update registration entry fail',
     props<{ error: string }>()
 );

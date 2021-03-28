@@ -1,7 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
 import { RegistrationInfo } from 'src/app/common/models/RegistrationInfo';
+import { updateRegistrationEntry } from '../store/registrations.actions';
 
 @Component({
     selector: 'app-create-edit-registration',
@@ -19,7 +22,8 @@ export class CreateEditRegistrationComponent implements OnInit {
     constructor(
         private dialogRef: MatDialogRef<CreateEditRegistrationComponent>,
         @Inject(MAT_DIALOG_DATA) public dialogData: RegistrationInfo,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private store: Store
     ) {}
 
     ngOnInit(): void {
@@ -27,8 +31,8 @@ export class CreateEditRegistrationComponent implements OnInit {
     }
 
     onSaveChanges() {
-        const registrationInfo = this.formData.value as RegistrationInfo;
-        console.log(registrationInfo);
+        const registrationInfo: RegistrationInfo = { ...this.dialogData, ...this.formData.value };
+        this.store.dispatch(updateRegistrationEntry({ registration: registrationInfo }));
         this.dialogRef.close();
     }
 
@@ -50,5 +54,15 @@ export class CreateEditRegistrationComponent implements OnInit {
             dateOfRegistration: this.dateControl,
             additionalComment: this.additionalCommentControl,
         });
+
+        this.dateControl.valueChanges
+            .pipe(
+                map((val: Date) => {
+                    const updated = new Date();
+                    updated.setTime(val.getTime() + 6 * 60 * 60 * 1000);
+                    return updated;
+                })
+            )
+            .subscribe((val: Date) => this.dateControl.setValue(val, { emitEvent: false }));
     }
 }

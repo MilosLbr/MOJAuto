@@ -83,10 +83,8 @@ namespace MOJAuto.Controllers
                 var registrationInfo = _mapper.Map<RegistrationInfoDto>(registrationToCreate);
                 return Ok(registrationInfo);
             }
-            else
-            {
-                return BadRequest("Greška prilikom upisa podataka o registraciji!");
-            }
+
+            return BadRequest("Greška prilikom upisa podataka o registraciji!");
 
         }
 
@@ -100,9 +98,15 @@ namespace MOJAuto.Controllers
                 return BadRequest($"Nije pronadjen unos za registraciju pod brojem {registrationDto.Id}");
             }
 
-            _mapper.Map<Registration>(registrationDto);
+            _mapper.Map(registrationDto, registrationToUpdate);
 
-            return Ok(registrationToUpdate);
+            if (await _carRepo.SaveAll())
+            {
+                var registrationInfoDto = _mapper.Map<RegistrationInfoDto>(registrationToUpdate);
+                return Ok(registrationInfoDto);
+            }
+
+            return BadRequest($"Desila se greška prilikom izmene registracije sa Id brojem ${registrationDto.Id}");
         }
     }
 }

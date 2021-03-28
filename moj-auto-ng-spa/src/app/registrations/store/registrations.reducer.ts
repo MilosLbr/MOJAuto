@@ -10,20 +10,33 @@ const initialState = adapter.getInitialState({ isFetching: false });
 
 const regReducer = createReducer(
     initialState,
-    on(registrationAction.getRegistrationsForUser, registrationAction.getRegistrationsForCar, (state) => ({
-        ...state,
-        isFetching: true,
-    })),
+    on(
+        registrationAction.getRegistrationsForUser,
+        registrationAction.getRegistrationsForCar,
+        registrationAction.updateRegistrationEntry,
+        (state) => ({
+            ...state,
+            isFetching: true,
+        })
+    ),
     on(registrationAction.getRegistrationsForUserSuccess, (state, action) =>
         adapter.setAll(action.registrations, { ...state, isFetching: false })
     ),
     on(registrationAction.getRegistrationsForCarSuccess, (state, action) =>
         adapter.setAll(action.registrations, { ...state, isFetching: false })
     ),
-    on(registrationAction.getRegistrationsForUserFail, registrationAction.getRegistrationsForCarFail, (state) => ({
-        ...state,
-        isFetching: false,
-    }))
+    on(registrationAction.updateRegistrationEntrySuccess, (state, action) =>
+        adapter.updateOne({ id: action.registration.id, changes: action.registration }, { ...state, isFetching: false })
+    ),
+    on(
+        registrationAction.getRegistrationsForUserFail,
+        registrationAction.getRegistrationsForCarFail,
+        registrationAction.updateRegistrationEntryFail,
+        (state) => ({
+            ...state,
+            isFetching: false,
+        })
+    )
 );
 
 export function registrationsReducer(state: IRegistrationsState, action: Action) {

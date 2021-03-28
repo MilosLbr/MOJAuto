@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
+import { HttpErrorDialogComponent } from 'src/app/common/components/http-error-dialog/http-error-dialog.component';
 import { extractErrorMessageFromResponse } from 'src/app/common/helpers/error-message-extractor';
 import { RegistrationsService } from '../service/registrations.service';
 import * as registrationAction from './registrations.actions';
@@ -60,16 +61,41 @@ export class RegistrationEffects {
         )
     );
 
+    updateRegistrationEntry$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(registrationAction.updateRegistrationEntry),
+            exhaustMap((action) =>
+                this.registrationsService.updateRegistrationEntry(action.registration).pipe(
+                    map((registration) => registrationAction.updateRegistrationEntrySuccess({ registration })),
+                    catchError((error: HttpErrorResponse) =>
+                        of(
+                            registrationAction.updateRegistrationEntryFail({
+                                error: extractErrorMessageFromResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     errorResponseEffect$ = createEffect(
         () =>
             this.actions$
                 .pipe(
                     ofType(
                         registrationAction.getRegistrationsForUserFail,
-                        registrationAction.getRegistrationsForCarFail
+                        registrationAction.getRegistrationsForCarFail,
+                        registrationAction.updateRegistrationEntryFail
                     )
                 )
-                .pipe(tap((action) => {})),
+                .pipe(
+                    tap((action) => {
+                        this.dialogService.open(HttpErrorDialogComponent, {
+                            data: action.error,
+                        });
+                    })
+                ),
         { dispatch: false }
     );
 }

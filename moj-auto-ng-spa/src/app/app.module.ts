@@ -12,9 +12,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthGuard } from './common/guards/auth.guard';
+import { HttpErrorDialogComponent } from './common/components/http-error-dialog/http-error-dialog.component';
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, HttpErrorDialogComponent],
     imports: [
         BrowserModule,
         HttpClientModule,

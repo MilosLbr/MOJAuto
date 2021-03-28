@@ -22,4 +22,10 @@ export class RegistrationsService {
 
         return this.http.get<RegistrationInfo[]>(url);
     }
+
+    updateRegistrationEntry(registration: RegistrationInfo) {
+        const url = this.baseUrl + '/registrations';
+
+        return this.http.put<RegistrationInfo>(url, registration);
+    }
 }
