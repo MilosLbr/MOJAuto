@@ -59,7 +59,7 @@ export class CreateEditRegistrationComponent implements OnInit {
             .pipe(
                 map((val: Date) => {
                     const updated = new Date();
-                    updated.setTime(val.getTime() + 6 * 60 * 60 * 1000);
+                    updated.setTime(val.getTime() + 6 * 60 * 60 * 1000); // add 6 hours to selected date
                     return updated;
                 })
             )
