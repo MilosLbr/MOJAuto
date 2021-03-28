@@ -4,16 +4,22 @@ import { RegistrationInfo } from 'src/app/common/models/RegistrationInfo';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class RegistrationsService {
-  private baseUrl = environment.apiUrl;
+    private baseUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {}
 
-  getRegistrationsForCurrentUser() {
-    const url = this.baseUrl + '/registrations/getRegistrationsForCurrentUser';
+    getRegistrationsForCurrentUser() {
+        const url = this.baseUrl + '/registrations/getRegistrationsForCurrentUser';
 
-    return this.http.get<RegistrationInfo[]>(url);
-  }
+        return this.http.get<RegistrationInfo[]>(url);
+    }
+
+    getRegistrationsForCar(carId: number) {
+        const url = this.baseUrl + `/registrations/getRegistrationsForCar/${carId}`;
+
+        return this.http.get<RegistrationInfo[]>(url);
+    }
 }

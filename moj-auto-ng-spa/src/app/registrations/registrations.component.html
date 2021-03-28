@@ -1,57 +1,71 @@
 <div class="registrations">
-  <table
-    class="registrations__table"
-    mat-table
-    [dataSource]="registrationsForUser$ | async"
-  >
-    <ng-container matColumnDef="technicalCheckService">
-      <th mat-header-cell *matHeaderCellDef>Ime servisa</th>
-      <td mat-cell *matCellDef="let registration">
-        {{ registration.technicalCheckService }}
-      </td>
-    </ng-container>
+    <h3 class="registrations__header">
+        <div class="registrations__header__title">
+            <span *ngIf="carModel != null">Registracije za {{ carModel }} </span>
+            <span *ngIf="carModel == null">Sve upisane registracije</span>
+        </div>
+        <div class="registrations__header__actions">
+            <button mat-raised-button (click)="openCreateOrEditDialog(null)">Dodaj</button>
+        </div>
+    </h3>
 
-    <ng-container matColumnDef="totalPrice">
-      <th mat-header-cell *matHeaderCellDef>Ukupna cena (rsd)</th>
-      <th></th>
-      <td mat-cell *matCellDef="let registration">
-        {{ registration.totalPrice }}
-      </td>
-    </ng-container>
+    <table class="registrations__table" mat-table [dataSource]="registrationsData$ | async">
+        <ng-container matColumnDef="technicalCheckService">
+            <th mat-header-cell *matHeaderCellDef>Ime servisa</th>
+            <td mat-cell *matCellDef="let registration">
+                {{ registration.technicalCheckService }}
+            </td>
+        </ng-container>
 
-    <ng-container matColumnDef="kilometrage">
-      <th mat-header-cell *matHeaderCellDef>Kilometraža</th>
-      <th></th>
-      <td mat-cell *matCellDef="let registration">
-        {{ registration.kilometrage }} &nbsp;km
-      </td>
-    </ng-container>
+        <ng-container matColumnDef="totalPrice">
+            <th mat-header-cell *matHeaderCellDef>Ukupna cena (rsd)</th>
+            <th></th>
+            <td mat-cell *matCellDef="let registration">
+                {{ registration.totalPrice }}
+            </td>
+        </ng-container>
 
-    <ng-container matColumnDef="dateOfRegistration">
-      <th mat-header-cell *matHeaderCellDef>Datum pregleda</th>
-      <th></th>
-      <td mat-cell *matCellDef="let registration">
-        {{ registration.dateOfRegistration | date }}
-      </td>
-    </ng-container>
+        <ng-container matColumnDef="kilometrage">
+            <th mat-header-cell *matHeaderCellDef>Kilometraža</th>
+            <th></th>
+            <td mat-cell *matCellDef="let registration"> {{ registration.kilometrage }} &nbsp;km </td>
+        </ng-container>
 
-    <ng-container matColumnDef="car">
-      <th mat-header-cell *matHeaderCellDef>Automobil</th>
-      <th></th>
-      <td mat-cell *matCellDef="let registration">
-        {{ registration.car.model }}
-      </td>
-    </ng-container>
+        <ng-container matColumnDef="dateOfRegistration">
+            <th mat-header-cell *matHeaderCellDef>Datum pregleda</th>
+            <th></th>
+            <td mat-cell *matCellDef="let registration">
+                {{ registration.dateOfRegistration | date }}
+            </td>
+        </ng-container>
 
-    <ng-container matColumnDef="additionalComment">
-      <th mat-header-cell *matHeaderCellDef>Komentar</th>
-      <th></th>
-      <td mat-cell *matCellDef="let registration">
-        {{ registration.additionalComment }}
-      </td>
-    </ng-container>
+        <ng-container matColumnDef="car">
+            <th mat-header-cell *matHeaderCellDef>Automobil</th>
+            <th></th>
+            <td mat-cell *matCellDef="let registration">
+                {{ registration.car.model }}
+            </td>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-  </table>
+        <ng-container matColumnDef="additionalComment">
+            <th mat-header-cell *matHeaderCellDef>Komentar</th>
+            <th></th>
+            <td mat-cell *matCellDef="let registration">
+                {{ registration.additionalComment }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <th></th>
+            <td mat-cell *matCellDef="let registration">
+                <button mat-icon-button color="primary" title="Izmeni" (click)="openCreateOrEditDialog(registration)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+    </table>
 </div>

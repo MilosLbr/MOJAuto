@@ -1,0 +1,21 @@
+.create-edit-dialog {
+    &__header {
+        h3 {
+            border-bottom: 1px solid rgb(61, 58, 58);
+            font-weight: 500;
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__footer {
+        text-align: right;
+
+        button {
+            margin-right: 10px;
+        }
+    }
+}

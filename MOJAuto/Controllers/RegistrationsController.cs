@@ -72,7 +72,7 @@ namespace MOJAuto.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateNewRegistrationEntry(RegistrationCreateDto registrationCreateDto)
+        public async Task<IActionResult> CreateNewRegistrationEntry(RegistrationCreateEditDto registrationCreateDto)
         {
             var registrationToCreate = _mapper.Map<Registration>(registrationCreateDto);
 
@@ -88,6 +88,21 @@ namespace MOJAuto.Controllers
                 return BadRequest("Greška prilikom upisa podataka o registraciji!");
             }
 
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateRegistrationEntry(RegistrationCreateEditDto registrationDto)
+        {
+            var registrationToUpdate = await _carRepo.GetById<Registration>(registrationDto.Id.Value);
+
+            if (registrationToUpdate == null)
+            {
+                return BadRequest($"Nije pronadjen unos za registraciju pod brojem {registrationDto.Id}");
+            }
+
+            _mapper.Map<Registration>(registrationDto);
+
+            return Ok(registrationToUpdate);
         }
     }
 }

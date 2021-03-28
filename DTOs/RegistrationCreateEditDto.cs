@@ -4,8 +4,9 @@ using System.Text;
 
 namespace DTOs
 {
-    public class RegistrationCreateDto
+    public class RegistrationCreateEditDto
     {
+        public int? Id { get; set; }
         public DateTime DateOfRegistration { get; set; }
         public string TechnicalCheckService { get; set; }
         public double Kilometrage { get; set; }
