@@ -1,34 +1,43 @@
 .nav-toolbar {
-  .spacer {
-    flex: 1 1 auto;
-  }
+    .spacer {
+        flex: 1 1 auto;
+    }
 
-  .nav-link {
-    padding: 0.5rem;
-    opacity: 0.8;
-    font-size: 1rem;
-    color: white;
-    text-decoration: none;
-  }
+    .nav-link {
+        padding: 0.5rem;
+        opacity: 0.8;
+        font-size: 1rem;
+        color: white;
+        text-decoration: none;
 
-  .active {
-      opacity: 1;
-  }
+        &:hover {
+            opacity: 1;
+            cursor: pointer;
+        }
 
-  .nav-link:hover {
-    opacity: 1;
-    cursor: pointer;
-  }
+        &--disabled {
+            color: gray;
+            cursor: not-allowed;
+        }
 
-  .nav-link-brand {
-    opacity: 0.95;
-    font-size: 1.25rem;
-  }
+        &--disabled:hover {
+            cursor: not-allowed;
+        }
+    }
 
-  .links {
-    list-style-type: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+    .active {
+        opacity: 1;
+    }
+
+    .nav-link-brand {
+        opacity: 0.95;
+        font-size: 1.25rem;
+    }
+
+    .links {
+        list-style-type: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 }

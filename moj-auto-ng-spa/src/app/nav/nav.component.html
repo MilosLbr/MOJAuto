@@ -1,20 +1,48 @@
 <mat-toolbar class="nav-toolbar" color="primary">
-  <span class="brand"> 
-      <a routerLink="/" routerLinkActive="active" class="nav-link nav-link-brand">MOJAuto</a>
-     </span>
-  <span class="spacer"></span>
-  <ul class="links">
-    <li>
-      <a routerLink="/registracije" routerLinkActive="active" class="nav-link">Registracije</a>
-    </li>
-    <li>
-      <a routerLink="/servisi" routerLinkActive="active" class="nav-link">Servisi</a>
-    </li>
-    <li>
-      <a routerLink="/gorivo" routerLinkActive="active" class="nav-link">Gorivo</a>
-    </li>
-    <li>
-      <a (click)="onLogoutClicked()" class="nav-link">Logout</a>
-    </li>
-  </ul>
+    <span class="brand">
+        <a
+            routerLink="/"
+            routerLinkActive="active"
+            class="nav-link nav-link-brand"
+            >MOJAuto</a
+        >
+    </span>
+    <span class="spacer"></span>
+    <ul class="links">
+        <li>
+            <a
+                [ngClass]="!isLoggedIn ? 'nav-link--disabled' : ''"
+                routerLink="/registracije"
+                routerLinkActive="active"
+                class="nav-link"
+                >Registracije</a
+            >
+        </li>
+        <li>
+            <a
+                [ngClass]="!isLoggedIn ? 'nav-link--disabled' : ''"
+                routerLink="/servisi"
+                routerLinkActive="active"
+                class="nav-link"
+                >Servisi</a
+            >
+        </li>
+        <li>
+            <a
+                [ngClass]="!isLoggedIn ? 'nav-link--disabled' : ''"
+                routerLink="/gorivo"
+                routerLinkActive="active"
+                class="nav-link"
+                >Gorivo</a
+            >
+        </li>
+        <li>
+            <a
+                [ngClass]="!isLoggedIn ? 'nav-link--disabled' : ''"
+                (click)="onLogoutClicked()"
+                class="nav-link"
+                >Logout</a
+            >
+        </li>
+    </ul>
 </mat-toolbar>
