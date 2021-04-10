@@ -23,6 +23,12 @@ export class RegistrationsService {
         return this.http.get<RegistrationInfo[]>(url);
     }
 
+    createRegistrationEntry(registration: RegistrationInfo) {
+        const url = this.baseUrl + '/registrations/';
+
+        return this.http.post<RegistrationInfo>(url, registration);
+    }
+
     updateRegistrationEntry(registration: RegistrationInfo) {
         const url = this.baseUrl + '/registrations';
 

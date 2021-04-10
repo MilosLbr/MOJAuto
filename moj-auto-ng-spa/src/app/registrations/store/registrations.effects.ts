@@ -61,6 +61,24 @@ export class RegistrationEffects {
         )
     );
 
+    createRegistrationEntry$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(registrationAction.createRegistrationEntry),
+            exhaustMap((action) =>
+                this.registrationsService.createRegistrationEntry(action.registration).pipe(
+                    map((registration) => registrationAction.createRegistrationEntrySuccess({ registration })),
+                    catchError((error: HttpErrorResponse) =>
+                        of(
+                            registrationAction.createRegistrationEntryFail({
+                                error: extractErrorMessageFromResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     updateRegistrationEntry$ = createEffect(() =>
         this.actions$.pipe(
             ofType(registrationAction.updateRegistrationEntry),

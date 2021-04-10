@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { UserCar } from 'src/app/common/models/UserCar';
 import { IHomeState } from '../store/home.store';
-import { fetchAllCars } from './store/cars.actions';
 import { getAllCars } from './store/cars.selectors';
 
 @Component({
@@ -17,7 +16,6 @@ export class DashboardComponent implements OnInit {
     constructor(private store: Store<IHomeState>) {}
 
     ngOnInit(): void {
-        this.store.dispatch(fetchAllCars());
         this.myCars$ = this.store.select(getAllCars);
     }
 }

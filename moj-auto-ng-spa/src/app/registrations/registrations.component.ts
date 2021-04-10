@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { first, takeUntil } from 'rxjs/operators';
 import { RegistrationInfo } from '../common/models/RegistrationInfo';
+import { UserCar } from '../common/models/UserCar';
+import { getAllCars } from '../home/store/home.selectors';
 import { CreateEditRegistrationComponent } from './create-edit-registration/create-edit-registration.component';
+import { CreateEditRegistrationModel } from './create-edit-registration/create-edit-registration.model';
 import { getRegistrationsForCar, getRegistrationsForUser } from './store/registrations.actions';
 import { userRegistrations } from './store/registrations.selectors';
 
@@ -13,7 +17,7 @@ import { userRegistrations } from './store/registrations.selectors';
     templateUrl: './registrations.component.html',
     styleUrls: ['./registrations.component.scss'],
 })
-export class RegistrationsComponent implements OnInit {
+export class RegistrationsComponent implements OnInit, OnDestroy {
     carId: number;
     carModel: string;
     registrationsData$: Observable<RegistrationInfo[]>;
@@ -26,6 +30,8 @@ export class RegistrationsComponent implements OnInit {
         'additionalComment',
         'actions',
     ];
+    myCars: UserCar[];
+    private destroy$ = new Subject<void>();
 
     constructor(private route: ActivatedRoute, private store: Store, private dialog: MatDialog) {}
 
@@ -39,11 +45,32 @@ export class RegistrationsComponent implements OnInit {
         }
 
         this.registrationsData$ = this.store.select(userRegistrations);
+
+        this.store
+            .select(getAllCars)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((cars) => {
+                if (this.carId != null) {
+                    this.myCars = cars.filter((car) => car.id === +this.carId);
+                } else {
+                    this.myCars = cars;
+                }
+            });
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.unsubscribe();
     }
 
     openCreateOrEditDialog(registration: RegistrationInfo): void {
+        const dialogData: CreateEditRegistrationModel = {
+            myCars: this.myCars,
+            registrationInfo: registration,
+        };
+
         this.dialog.open(CreateEditRegistrationComponent, {
-            data: registration,
+            data: dialogData,
             disableClose: true,
             width: '50%',
         });

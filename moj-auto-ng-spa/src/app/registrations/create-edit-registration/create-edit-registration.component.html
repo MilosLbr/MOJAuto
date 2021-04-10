@@ -9,29 +9,39 @@
     <div class="create-edit-dialog__form">
         <mat-form-field appearance="fill">
             <mat-label>Ime servisa</mat-label>
-            <input matInput [formControl]="techServiceNameControl" />
+            <input autocomplete="off" matInput [formControl]="techServiceNameControl" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Automobil</mat-label>
+            <input matInput [formControl]="carFormControl" [matAutocomplete]="auto" />
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayCarName">
+                <mat-option *ngFor="let car of myCars" [value]="car">
+                    {{ car.model }}
+                </mat-option>
+            </mat-autocomplete>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
             <mat-label>Ukupna cena (rsd)</mat-label>
-            <input type="number" min="1" matInput [formControl]="totalPriceControl" />
+            <input autocomplete="off" type="number" min="1" matInput [formControl]="totalPriceControl" />
         </mat-form-field>
 
         <mat-form-field appearance="fill">
             <mat-label>Kilometraža automobila</mat-label>
-            <input type="number" min="1" matInput [formControl]="kilometrageControl" />
+            <input autocomplete="off" type="number" min="1" matInput [formControl]="kilometrageControl" />
         </mat-form-field>
 
         <mat-form-field appearance="fill">
             <mat-label>Datum tehničkog pregleda</mat-label>
-            <input matInput [formControl]="dateControl" [matDatepicker]="picker" />
+            <input autocomplete="off" matInput [formControl]="dateControl" [matDatepicker]="picker" />
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
             <mat-label>Dodatni komentar</mat-label>
-            <input matInput [formControl]="additionalCommentControl" />
+            <input autocomplete="off" matInput [formControl]="additionalCommentControl" />
         </mat-form-field>
     </div>
 

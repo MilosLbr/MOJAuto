@@ -80,6 +80,8 @@ namespace MOJAuto.Controllers
 
             if(await _carRepo.SaveAll())
             {
+                var relatedCar = await _carRepo.GetById<Car>(registrationToCreate.CarId);
+                registrationToCreate.Car = relatedCar;
                 var registrationInfo = _mapper.Map<RegistrationInfoDto>(registrationToCreate);
                 return Ok(registrationInfo);
             }

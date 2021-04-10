@@ -13,6 +13,8 @@ import { environment } from 'src/environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthGuard } from './common/guards/auth.guard';
 import { HttpErrorDialogComponent } from './common/components/http-error-dialog/http-error-dialog.component';
+import { appReducer } from './store/app.reducer';
+import { appEffects } from './store/app.effects';
 
 @NgModule({
     declarations: [AppComponent, HttpErrorDialogComponent],
@@ -23,8 +25,8 @@ import { HttpErrorDialogComponent } from './common/components/http-error-dialog/
         BrowserAnimationsModule,
         NavModule,
         HomeModule,
-        StoreModule.forRoot({}),
-        EffectsModule.forRoot(),
+        StoreModule.forRoot(appReducer),
+        EffectsModule.forRoot(appEffects),
         StoreDevtoolsModule.instrument({
             maxAge: 10,
             logOnly: environment.production,
