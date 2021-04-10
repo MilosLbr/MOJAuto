@@ -1,31 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { UserCar } from 'src/app/common/models/UserCar';
-import { AlertifyService } from 'src/app/common/services/alertify.service';
-import { ApiService } from 'src/app/common/services/api.service';
+import { IHomeState } from '../store/home.store';
+import { fetchAllCars } from './store/cars.actions';
+import { getAllCars } from './store/cars.selectors';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  myCars: UserCar[];
+    myCars$: Observable<UserCar[]>;
 
-  constructor(
-    private apiService: ApiService,
-    private alertify: AlertifyService
-  ) {}
+    constructor(private store: Store<IHomeState>) {}
 
-  ngOnInit(): void {
-    this.apiService.getCarsForUser().subscribe(
-      (data) => {
-        this.myCars = data;
-      },
-      (error) => {
-        this.alertify.error(
-          'Greška prilikom dobavljanja informacija o automobilima!'
-        );
-      }
-    );
-  }
+    ngOnInit(): void {
+        this.store.dispatch(fetchAllCars());
+        this.myCars$ = this.store.select(getAllCars);
+    }
 }

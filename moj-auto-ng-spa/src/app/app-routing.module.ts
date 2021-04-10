@@ -10,26 +10,17 @@ const routes: Routes = [
     },
     {
         path: 'registracije',
-        loadChildren: () =>
-            import('./registrations/registrations.module').then(
-                (m) => m.RegistrationsModule
-            ),
+        loadChildren: () => import('./registrations/registrations.module').then((m) => m.RegistrationsModule),
         canActivate: [AuthGuard],
     },
     {
         path: 'servisi',
-        loadChildren: () =>
-            import('./car-services/car-services.module').then(
-                (m) => m.CarServicesModule
-            ),
+        loadChildren: () => import('./car-services/car-services.module').then((m) => m.CarServicesModule),
         canActivate: [AuthGuard],
     },
     {
         path: 'gorivo',
-        loadChildren: () =>
-            import('./fuel-consumption/fuel-consumption.module').then(
-                (m) => m.FuelConsumptionModule
-            ),
+        loadChildren: () => import('./fuel-consumption/fuel-consumption.module').then((m) => m.FuelConsumptionModule),
         canActivate: [AuthGuard],
     },
     {

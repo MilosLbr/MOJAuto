@@ -7,6 +7,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
     exports: [
@@ -19,6 +20,7 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
         MatDatepickerModule,
         MatNativeDateModule,
         MatRippleModule,
+        MatTabsModule,
     ],
 })
 export class MaterialModule {}
