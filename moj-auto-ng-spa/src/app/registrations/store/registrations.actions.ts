@@ -49,3 +49,16 @@ export const updateRegistrationEntryFail = createAction(
     '[Registrations] Update registration entry fail',
     props<{ error: string }>()
 );
+
+export const deleteRegistrationEntry = createAction(
+    '[Registrations] Delete registration entry',
+    props<{ registration: RegistrationInfo }>()
+);
+export const deleteRegistrationEntrySuccess = createAction(
+    '[Registrations] Delete registration entry success',
+    props<{ registration: RegistrationInfo }>()
+);
+export const deleteRegistrationEntryFail = createAction(
+    '[Registrations] Delete registration entry fail',
+    props<{ error: string }>()
+);

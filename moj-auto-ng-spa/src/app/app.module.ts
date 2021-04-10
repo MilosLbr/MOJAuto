@@ -15,9 +15,11 @@ import { AuthGuard } from './common/guards/auth.guard';
 import { HttpErrorDialogComponent } from './common/components/http-error-dialog/http-error-dialog.component';
 import { appReducer } from './store/app.reducer';
 import { appEffects } from './store/app.effects';
+import { YesNoDialogComponent } from './common/components/yes-no-dialog/yes-no-dialog.component';
+import { MaterialModule } from './common/modules/material.module';
 
 @NgModule({
-    declarations: [AppComponent, HttpErrorDialogComponent],
+    declarations: [AppComponent, HttpErrorDialogComponent, YesNoDialogComponent],
     imports: [
         BrowserModule,
         HttpClientModule,
@@ -25,6 +27,7 @@ import { appEffects } from './store/app.effects';
         BrowserAnimationsModule,
         NavModule,
         HomeModule,
+        MaterialModule,
         StoreModule.forRoot(appReducer),
         EffectsModule.forRoot(appEffects),
         StoreDevtoolsModule.instrument({

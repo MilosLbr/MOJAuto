@@ -1,0 +1,10 @@
+<div class="yes-no-dialog">
+    <h3 class="yes-no-dialog__title">Brisanje</h3>
+    <p class="yes-no-dialog__message">{{ message }}</p>
+    <div class="yes-no-dialog__footer">
+        <button class="yes-no-dialog__footer-button" mat-raised-button color="primary" (click)="onYesClick()"
+            >Da</button
+        >
+        <button class="yes-no-dialog__footer-button" mat-raised-button (click)="onNoClick()">Ne</button>
+    </div>
+</div>

@@ -110,5 +110,27 @@ namespace MOJAuto.Controllers
 
             return BadRequest($"Desila se greška prilikom izmene registracije sa Id brojem ${registrationDto.Id}");
         }
+
+
+        [HttpDelete("{registrationId}")]
+        public async Task<IActionResult> DeleteRegistrationEntry(int registrationId)
+        {
+            var registrationFromDb = await _carRepo.GetById<Registration>(registrationId);
+
+            if(registrationFromDb == null)
+            {
+                return BadRequest($"Nije pronadjen unos sa Id brojem {registrationId}");
+            }
+
+            _carRepo.Delete(registrationFromDb);
+
+            if(await _carRepo.SaveAll())
+            {
+                var registrationInfo = _mapper.Map<RegistrationInfoDto>(registrationFromDb);
+                return Ok(registrationInfo);
+            }
+
+            return BadRequest($"Desila se greška prilikom brisanja registracije sa Id brojem ${registrationFromDb.Id}");
+        }
     }
 }

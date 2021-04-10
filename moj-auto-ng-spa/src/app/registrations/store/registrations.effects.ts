@@ -97,6 +97,24 @@ export class RegistrationEffects {
         )
     );
 
+    deleteRegistrationEntry$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(registrationAction.deleteRegistrationEntry),
+            exhaustMap((action) =>
+                this.registrationsService.deleteRegistrationEntry(action.registration.id).pipe(
+                    map((registration) => registrationAction.deleteRegistrationEntrySuccess({ registration })),
+                    catchError((error: HttpErrorResponse) =>
+                        of(
+                            registrationAction.deleteRegistrationEntryFail({
+                                error: extractErrorMessageFromResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
     errorResponseEffect$ = createEffect(
         () =>
             this.actions$
@@ -104,7 +122,8 @@ export class RegistrationEffects {
                     ofType(
                         registrationAction.getRegistrationsForUserFail,
                         registrationAction.getRegistrationsForCarFail,
-                        registrationAction.updateRegistrationEntryFail
+                        registrationAction.updateRegistrationEntryFail,
+                        registrationAction.deleteRegistrationEntryFail
                     )
                 )
                 .pipe(

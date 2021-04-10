@@ -1,0 +1,22 @@
+.yes-no-dialog {
+    &__title {
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+
+    &__message {
+        padding: 10px;
+        margin-bottom: 16px;
+        border-bottom: 1px solid rgb(92, 88, 88);
+    }
+
+    &__footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        &-button {
+            margin-left: 8px;
+        }
+    }
+}

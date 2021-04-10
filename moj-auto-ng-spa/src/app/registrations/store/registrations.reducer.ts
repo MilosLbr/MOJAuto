@@ -15,6 +15,7 @@ const regReducer = createReducer(
         registrationAction.getRegistrationsForCar,
         registrationAction.createRegistrationEntry,
         registrationAction.updateRegistrationEntry,
+        registrationAction.deleteRegistrationEntry,
         (state) => ({
             ...state,
             isFetching: true,
@@ -32,11 +33,15 @@ const regReducer = createReducer(
     on(registrationAction.updateRegistrationEntrySuccess, (state, action) =>
         adapter.updateOne({ id: action.registration.id, changes: action.registration }, { ...state, isFetching: false })
     ),
+    on(registrationAction.deleteRegistrationEntrySuccess, (state, action) =>
+        adapter.removeOne(action.registration.id, { ...state, isFetching: false })
+    ),
     on(
         registrationAction.getRegistrationsForUserFail,
         registrationAction.getRegistrationsForCarFail,
         registrationAction.createRegistrationEntryFail,
         registrationAction.updateRegistrationEntryFail,
+        registrationAction.deleteRegistrationEntryFail,
         (state) => ({
             ...state,
             isFetching: false,
