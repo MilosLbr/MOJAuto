@@ -64,7 +64,7 @@ namespace MOJAuto.Controllers
             _carRepo.Add(newEntry);
 
 
-            if(await _carRepo.SaveAll())
+            if(await _carRepo.SaveAll() > 0)
             {
                 return Ok("Uspešno zabeleženo!");
             }

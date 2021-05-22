@@ -19,7 +19,7 @@ namespace MOJAuto.Repository
         Task<IEnumerable<TEntity>> GetAll<TEntity>() where TEntity : class;
         IQueryable<TEntity> Filter<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class;
 
-        Task<bool> SaveAll();
+        Task<int> SaveAll();
 
     }
 }

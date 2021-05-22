@@ -62,7 +62,7 @@ namespace MOJAuto.Controllers
 
             _carRepo.Add(newServiceEntry);
 
-            if (await _carRepo.SaveAll())
+            if (await _carRepo.SaveAll() > 0)
             {
                 var savedService = _mapper.Map<ServiceDto>(newServiceEntry);
                 return Ok(savedService);

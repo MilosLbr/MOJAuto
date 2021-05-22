@@ -55,7 +55,7 @@ namespace MOJAuto.Controllers
 
             currentUser.MyCars.Add(carToCreate);
 
-            if(await _carRepo.SaveAll()){
+            if(await _carRepo.SaveAll() > 0){
                 return Ok("Novi auto je ubačen!");
             }
             else

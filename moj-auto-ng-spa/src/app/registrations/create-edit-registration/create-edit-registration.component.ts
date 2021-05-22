@@ -1,12 +1,10 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Store } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { RegistrationInfo } from 'src/app/common/models/RegistrationInfo';
 import { UserCar } from 'src/app/common/models/UserCar';
-import { createRegistrationEntry, updateRegistrationEntry } from '../store/registrations.actions';
 import { CreateEditRegistrationModel } from './create-edit-registration.model';
 
 @Component({
@@ -27,11 +25,10 @@ export class CreateEditRegistrationComponent implements OnInit, OnDestroy {
     private destroy$ = new Subject<void>();
 
     constructor(
-        private dialogRef: MatDialogRef<CreateEditRegistrationComponent>,
+        private dialogRef: MatDialogRef<CreateEditRegistrationComponent, RegistrationInfo>,
         @Inject(MAT_DIALOG_DATA)
         public dialogData: CreateEditRegistrationModel,
-        private fb: FormBuilder,
-        private store: Store
+        private fb: FormBuilder
     ) {}
 
     ngOnInit(): void {
@@ -53,12 +50,7 @@ export class CreateEditRegistrationComponent implements OnInit, OnDestroy {
             carId: this.carFormControl.value.id,
         };
 
-        if (registrationInfo.id == null) {
-            this.store.dispatch(createRegistrationEntry({ registration: registrationInfo }));
-        } else {
-            this.store.dispatch(updateRegistrationEntry({ registration: registrationInfo }));
-        }
-        this.dialogRef.close();
+        this.dialogRef.close(registrationInfo);
     }
 
     onCancel() {

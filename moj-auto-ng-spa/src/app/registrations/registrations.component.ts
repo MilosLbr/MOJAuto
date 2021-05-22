@@ -3,18 +3,18 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { YesNoDialogComponent } from '../common/components/yes-no-dialog/yes-no-dialog.component';
 import { RegistrationInfo } from '../common/models/RegistrationInfo';
 import { UserCar } from '../common/models/UserCar';
 import { CarsService } from '../home/dashboard/services/cars.service';
-import { getAllCars } from '../home/store/home.selectors';
 import { CreateEditRegistrationComponent } from './create-edit-registration/create-edit-registration.component';
 import { CreateEditRegistrationModel } from './create-edit-registration/create-edit-registration.model';
 import {
+    createRegistrationEntry,
     deleteRegistrationEntry,
     getRegistrationsForCar,
     getRegistrationsForUser,
+    updateRegistrationEntry,
 } from './store/registrations.actions';
 import { userRegistrations } from './store/registrations.selectors';
 
@@ -71,10 +71,18 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
             registrationInfo: registration,
         };
 
-        this.dialog.open(CreateEditRegistrationComponent, {
+        const dialogRef = this.dialog.open(CreateEditRegistrationComponent, {
             data: dialogData,
             disableClose: true,
             width: '50%',
+        });
+
+        dialogRef.afterClosed().subscribe((registrationInfo: RegistrationInfo) => {
+            if (registrationInfo.id == null) {
+                this.store.dispatch(createRegistrationEntry({ registration: registrationInfo }));
+            } else {
+                this.store.dispatch(updateRegistrationEntry({ registration: registrationInfo }));
+            }
         });
     }
 

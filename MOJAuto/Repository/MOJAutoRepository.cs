@@ -42,9 +42,9 @@ namespace MOJAuto.Repository
             return await _context.Set<TEntity>().FindAsync(Id);
         }
 
-        public async Task<bool> SaveAll()
+        public async Task<int> SaveAll()
         {
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.SaveChangesAsync();
         }
 
         public void Dispose()

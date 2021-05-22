@@ -78,7 +78,7 @@ namespace MOJAuto.Controllers
 
             _carRepo.Add(registrationToCreate);            
 
-            if(await _carRepo.SaveAll())
+            if(await _carRepo.SaveAll() > 0)
             {
                 var relatedCar = await _carRepo.GetById<Car>(registrationToCreate.CarId);
                 registrationToCreate.Car = relatedCar;
@@ -102,7 +102,7 @@ namespace MOJAuto.Controllers
 
             _mapper.Map(registrationDto, registrationToUpdate);
 
-            if (await _carRepo.SaveAll())
+            if (await _carRepo.SaveAll() >= 0)
             {
                 var registrationInfoDto = _mapper.Map<RegistrationInfoDto>(registrationToUpdate);
                 return Ok(registrationInfoDto);
@@ -124,7 +124,7 @@ namespace MOJAuto.Controllers
 
             _carRepo.Delete(registrationFromDb);
 
-            if(await _carRepo.SaveAll())
+            if(await _carRepo.SaveAll() > 0)
             {
                 var registrationInfo = _mapper.Map<RegistrationInfoDto>(registrationFromDb);
                 return Ok(registrationInfo);

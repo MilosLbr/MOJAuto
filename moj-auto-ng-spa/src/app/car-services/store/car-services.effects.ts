@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, exhaustMap, map } from 'rxjs/operators';
+import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
+import { HttpErrorDialogComponent } from 'src/app/common/components/http-error-dialog/http-error-dialog.component';
 import { extractErrorMessageFromResponse } from 'src/app/common/helpers/error-message-extractor';
 import { CarServicesService } from '../services/car-services.service';
 import * as actions from './car-services.actions';
@@ -56,5 +57,22 @@ export class CarServicesEffects {
                 )
             )
         )
+    );
+
+    errorEffect$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(
+                    actions.getCarServicesForCarFail,
+                    actions.getCarServicesForUserFail,
+                    actions.createNewCarServiceEntryFail
+                ),
+                tap((action) => {
+                    this.dialogService.open(HttpErrorDialogComponent, {
+                        data: action.error,
+                    });
+                })
+            ),
+        { dispatch: false }
     );
 }
