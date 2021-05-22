@@ -64,7 +64,8 @@ namespace MOJAuto.Controllers
 
             if (await _carRepo.SaveAll())
             {
-                return Ok("Uspešno upisano!");
+                var savedService = _mapper.Map<ServiceDto>(newServiceEntry);
+                return Ok(savedService);
             }
             else
             {

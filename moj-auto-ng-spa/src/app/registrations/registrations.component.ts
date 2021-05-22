@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { first, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { YesNoDialogComponent } from '../common/components/yes-no-dialog/yes-no-dialog.component';
 import { RegistrationInfo } from '../common/models/RegistrationInfo';
 import { UserCar } from '../common/models/UserCar';

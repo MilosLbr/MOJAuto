@@ -6,7 +6,7 @@ import * as registrationAction from './registrations.actions';
 
 const adapter: EntityAdapter<RegistrationInfo> = createEntityAdapter<RegistrationInfo>({ selectId: (r) => r.id });
 
-const initialState = adapter.getInitialState({ isFetching: false });
+const initialState = adapter.getInitialState({ isLoading: false });
 
 const regReducer = createReducer(
     initialState,
@@ -18,23 +18,23 @@ const regReducer = createReducer(
         registrationAction.deleteRegistrationEntry,
         (state) => ({
             ...state,
-            isFetching: true,
+            isLoading: true,
         })
     ),
     on(registrationAction.getRegistrationsForUserSuccess, (state, action) =>
-        adapter.setAll(action.registrations, { ...state, isFetching: false })
+        adapter.setAll(action.registrations, { ...state, isLoading: false })
     ),
     on(registrationAction.getRegistrationsForCarSuccess, (state, action) =>
-        adapter.setAll(action.registrations, { ...state, isFetching: false })
+        adapter.setAll(action.registrations, { ...state, isLoading: false })
     ),
     on(registrationAction.createRegistrationEntrySuccess, (state, action) =>
-        adapter.addOne(action.registration, { ...state, isFetching: false })
+        adapter.addOne(action.registration, { ...state, isLoading: false })
     ),
     on(registrationAction.updateRegistrationEntrySuccess, (state, action) =>
-        adapter.updateOne({ id: action.registration.id, changes: action.registration }, { ...state, isFetching: false })
+        adapter.updateOne({ id: action.registration.id, changes: action.registration }, { ...state, isLoading: false })
     ),
     on(registrationAction.deleteRegistrationEntrySuccess, (state, action) =>
-        adapter.removeOne(action.registration.id, { ...state, isFetching: false })
+        adapter.removeOne(action.registration.id, { ...state, isLoading: false })
     ),
     on(
         registrationAction.getRegistrationsForUserFail,
@@ -44,7 +44,7 @@ const regReducer = createReducer(
         registrationAction.deleteRegistrationEntryFail,
         (state) => ({
             ...state,
-            isFetching: false,
+            isLoading: false,
         })
     )
 );
