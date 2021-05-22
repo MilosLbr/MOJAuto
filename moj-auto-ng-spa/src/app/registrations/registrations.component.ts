@@ -78,6 +78,10 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
         });
 
         dialogRef.afterClosed().subscribe((registrationInfo: RegistrationInfo) => {
+            if (registrationInfo == null) {
+                return;
+            }
+
             if (registrationInfo.id == null) {
                 this.store.dispatch(createRegistrationEntry({ registration: registrationInfo }));
             } else {

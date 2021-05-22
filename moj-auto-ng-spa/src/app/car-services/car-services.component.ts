@@ -3,11 +3,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/internal/Observable';
+import { YesNoDialogComponent } from '../common/components/yes-no-dialog/yes-no-dialog.component';
 import { ServiceDto } from '../common/models/ServiceDto';
 import { CarsService } from '../home/dashboard/services/cars.service';
 import { CreateEditCarServiceComponent } from './create-edit-car-service/create-edit-car-service.component';
 import { CreateEditCarServiceModel } from './create-edit-car-service/create-edit-car-service.model';
-import { createNewCarServiceEntry, getCarServicesForCar, getCarServicesForUser } from './store/car-services.actions';
+import {
+    createNewCarServiceEntry,
+    deleteCarServiceEntry,
+    getCarServicesForCar,
+    getCarServicesForUser,
+} from './store/car-services.actions';
 import { carServices } from './store/car-services.selectors';
 
 @Component({
@@ -57,7 +63,10 @@ export class CarServicesComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((carService: ServiceDto) => {
-            console.log(carService);
+            if (carService == null) {
+                return;
+            }
+
             if (carService.id == null) {
                 this.store.dispatch(createNewCarServiceEntry({ carService }));
             } else {
@@ -66,5 +75,15 @@ export class CarServicesComponent implements OnInit {
         });
     }
 
-    deleteCarServiceEntry(carService: ServiceDto): void {}
+    deleteCarServiceEntry(carService: ServiceDto): void {
+        const dialogRef = this.dialog.open(YesNoDialogComponent, {
+            data: 'Da li ste sigurni da želite da obrišete ovaj unos o obavljenom servisu?',
+        });
+
+        dialogRef.afterClosed().subscribe((result: Boolean) => {
+            if (result) {
+                this.store.dispatch(deleteCarServiceEntry({ serviceId: carService.id }));
+            }
+        });
+    }
 }

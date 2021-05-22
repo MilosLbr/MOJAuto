@@ -10,14 +10,21 @@ const initialState = adapter.getInitialState({ isLoading: false });
 
 const srvcReducer = createReducer(
     initialState,
-    on(actions.getCarServicesForUser, actions.getCarServicesForCar, actions.createNewCarServiceEntry, (state) => ({
-        ...state,
-        isLoading: true,
-    })),
+    on(
+        actions.getCarServicesForUser,
+        actions.getCarServicesForCar,
+        actions.createNewCarServiceEntry,
+        actions.deleteCarServiceEntry,
+        (state) => ({
+            ...state,
+            isLoading: true,
+        })
+    ),
     on(
         actions.getCarServicesForUserFail,
         actions.getCarServicesForCarFail,
         actions.createNewCarServiceEntryFail,
+        actions.deleteCarServiceEntryFail,
         (state) => ({ ...state, isLoading: false })
     ),
     on(actions.getCarServicesForUserSuccess, actions.getCarServicesForCarSuccess, (state, action) =>
@@ -25,6 +32,9 @@ const srvcReducer = createReducer(
     ),
     on(actions.createNewCarServiceEntrySuccess, (state, action) =>
         adapter.addOne(action.carService, { ...state, isLoading: false })
+    ),
+    on(actions.deleteCarServiceEntrySuccess, (state, action) =>
+        adapter.removeOne(action.carService.id, { ...state, isLoading: false })
     )
 );
 

@@ -31,6 +31,7 @@ namespace MOJAuto.AutoMapper
 
             // car services
             CreateMap<Services, ServiceDto>().ReverseMap();
+            CreateMap<ServiceCreateEditDto, Services>().ReverseMap();
         }
     }
 }

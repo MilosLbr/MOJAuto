@@ -130,7 +130,7 @@ namespace MOJAuto.Controllers
                 return Ok(registrationInfo);
             }
 
-            return BadRequest($"Desila se greška prilikom brisanja registracije sa Id brojem ${registrationFromDb.Id}");
+            return BadRequest($"Desila se greška prilikom brisanja registracije sa Id brojem {registrationFromDb.Id}");
         }
     }
 }

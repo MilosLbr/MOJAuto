@@ -54,7 +54,7 @@ export class CreateEditRegistrationComponent implements OnInit, OnDestroy {
     }
 
     onCancel() {
-        this.dialogRef.close();
+        this.dialogRef.close(null);
     }
 
     displayCarName(car: UserCar): string {

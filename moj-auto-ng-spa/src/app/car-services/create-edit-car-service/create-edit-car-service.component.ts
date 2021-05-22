@@ -13,6 +13,12 @@ import { CreateEditCarServiceModel } from './create-edit-car-service.model';
 export class CreateEditCarServiceComponent implements OnInit {
     formData: FormGroup;
     titleControl: FormControl;
+    carFormControl: FormControl;
+    totalPriceControl: FormControl;
+    kilometrageControl: FormControl;
+    dateControl: FormControl;
+    additionalCommentControl: FormControl;
+
     myCars: UserCar[];
     carServiceInfo: ServiceDto;
 
@@ -33,19 +39,35 @@ export class CreateEditCarServiceComponent implements OnInit {
         const serviceInfo: ServiceDto = {
             ...this.carServiceInfo,
             ...this.formData.value,
+            car: this.carFormControl.value,
+            carId: this.carFormControl.value.id,
         };
         this.dialogRef.close(serviceInfo);
     }
 
     onCancel(): void {
-        this.dialogRef.close();
+        this.dialogRef.close(null);
     }
 
     initForm(carService: ServiceDto): void {
         this.titleControl = this.fb.control(carService?.title, Validators.required);
+        this.carFormControl = this.fb.control(carService?.car, Validators.required);
+        this.totalPriceControl = this.fb.control(carService?.price, [Validators.required, Validators.min(1)]);
+        this.kilometrageControl = this.fb.control(carService?.kilometrage, [Validators.required, Validators.min(1)]);
+        this.dateControl = this.fb.control(carService?.dateOfService, Validators.required);
+        this.additionalCommentControl = this.fb.control(carService?.comment, Validators.required);
 
         this.formData = this.fb.group({
             title: this.titleControl,
+            car: this.carFormControl,
+            price: this.totalPriceControl,
+            kilometrage: this.kilometrageControl,
+            dateOfService: this.dateControl,
+            comment: this.additionalCommentControl,
         });
+    }
+
+    displayCarName(car: UserCar): string {
+        return car && car.model ? car.model : '';
     }
 }

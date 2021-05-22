@@ -27,4 +27,10 @@ export class CarServicesService {
     createNewServiceInfo(service: ServiceDto): Observable<ServiceDto> {
         return this.http.post<ServiceDto>(this.baseUrl, service);
     }
+
+    deleteServiceInfo(serviceId: number): Observable<ServiceDto> {
+        const url = this.baseUrl + '/' + serviceId;
+
+        return this.http.delete<ServiceDto>(url);
+    }
 }

@@ -33,3 +33,16 @@ export const createNewCarServiceEntryFail = createAction(
     '[Car services] Create new car service entry fail',
     props<{ error: string }>()
 );
+
+export const deleteCarServiceEntry = createAction(
+    '[Car services] Delete car service entry',
+    props<{ serviceId: number }>()
+);
+export const deleteCarServiceEntrySuccess = createAction(
+    '[Car services] Delete car service entry success',
+    props<{ carService: ServiceDto }>()
+);
+export const deleteCarServiceEntryFail = createAction(
+    '[Car services] Delete car service entry fail',
+    props<{ error: string }>()
+);

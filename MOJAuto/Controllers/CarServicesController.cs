@@ -56,7 +56,7 @@ namespace MOJAuto.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateNewCarServiceEntry(ServiceDto serviceDto)
+        public async Task<IActionResult> CreateNewCarServiceEntry(ServiceCreateEditDto serviceDto)
         {
             var newServiceEntry = _mapper.Map<Services>(serviceDto);
 
@@ -64,6 +64,8 @@ namespace MOJAuto.Controllers
 
             if (await _carRepo.SaveAll() > 0)
             {
+                var relatedCar = await _carRepo.GetById<Car>(serviceDto.CarId);
+                newServiceEntry.Car = relatedCar;
                 var savedService = _mapper.Map<ServiceDto>(newServiceEntry);
                 return Ok(savedService);
             }
@@ -71,6 +73,27 @@ namespace MOJAuto.Controllers
             {
                 return BadRequest("Greška prilikom upisa servisa!");
             }
+        }
+
+        [HttpDelete("{serviceId}")]
+        public async Task<IActionResult> DeleteCarServiceEntry(int serviceId)
+        {
+            var carServiceFromDb = await _carRepo.GetById<Services>(serviceId);
+
+            if(carServiceFromDb == null)
+            {
+                return BadRequest($"Nije pronadjen unos sa Id brojem { serviceId}");
+            }
+
+            _carRepo.Delete(carServiceFromDb);
+
+            if (await _carRepo.SaveAll() > 0)
+            {
+                var serviceInfo = _mapper.Map<ServiceDto>(carServiceFromDb);
+                return Ok(serviceInfo);
+            }
+
+            return BadRequest($"Desila se greška prilikom brisanja servisa sa Id brojem {carServiceFromDb.Id}");
         }
     }
 }

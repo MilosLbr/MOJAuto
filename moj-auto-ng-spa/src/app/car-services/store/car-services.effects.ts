@@ -59,13 +59,28 @@ export class CarServicesEffects {
         )
     );
 
+    deleteServiceEntry$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(actions.deleteCarServiceEntry),
+            exhaustMap(({ serviceId }) =>
+                this.carServicesService.deleteServiceInfo(serviceId).pipe(
+                    map((carService) => actions.deleteCarServiceEntrySuccess({ carService })),
+                    catchError((error: HttpErrorResponse) =>
+                        of(actions.deleteCarServiceEntryFail({ error: extractErrorMessageFromResponse(error) }))
+                    )
+                )
+            )
+        )
+    );
+
     errorEffect$ = createEffect(
         () =>
             this.actions$.pipe(
                 ofType(
                     actions.getCarServicesForCarFail,
                     actions.getCarServicesForUserFail,
-                    actions.createNewCarServiceEntryFail
+                    actions.createNewCarServiceEntryFail,
+                    actions.deleteCarServiceEntryFail
                 ),
                 tap((action) => {
                     this.dialogService.open(HttpErrorDialogComponent, {
