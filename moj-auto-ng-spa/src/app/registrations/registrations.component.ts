@@ -7,6 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 import { YesNoDialogComponent } from '../common/components/yes-no-dialog/yes-no-dialog.component';
 import { RegistrationInfo } from '../common/models/RegistrationInfo';
 import { UserCar } from '../common/models/UserCar';
+import { CarsService } from '../home/dashboard/services/cars.service';
 import { getAllCars } from '../home/store/home.selectors';
 import { CreateEditRegistrationComponent } from './create-edit-registration/create-edit-registration.component';
 import { CreateEditRegistrationModel } from './create-edit-registration/create-edit-registration.model';
@@ -38,7 +39,12 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
     myCars: UserCar[];
     private destroy$ = new Subject<void>();
 
-    constructor(private route: ActivatedRoute, private store: Store, private dialog: MatDialog) {}
+    constructor(
+        private route: ActivatedRoute,
+        private store: Store,
+        private dialog: MatDialog,
+        private carService: CarsService
+    ) {}
 
     ngOnInit(): void {
         this.carId = this.route.snapshot.params['id'];
@@ -51,16 +57,7 @@ export class RegistrationsComponent implements OnInit, OnDestroy {
 
         this.registrationsData$ = this.store.select(userRegistrations);
 
-        this.store
-            .select(getAllCars)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((cars) => {
-                if (this.carId != null) {
-                    this.myCars = cars.filter((car) => car.id === +this.carId);
-                } else {
-                    this.myCars = cars;
-                }
-            });
+        this.myCars = this.carService.getMyCarsFromStore(this.carId);
     }
 
     ngOnDestroy(): void {

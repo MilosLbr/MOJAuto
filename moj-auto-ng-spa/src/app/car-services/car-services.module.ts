@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { MaterialModule } from '../common/modules/material.module';
 import { CarServicesComponent } from './car-services.component';
 import { CarServicesRoutingModule } from './car-services.routing';
 import { CarServicesEffects } from './store/car-services.effects';
@@ -14,6 +15,7 @@ import { carServicesStoreName } from './store/car-services.store';
         CommonModule,
         StoreModule.forFeature(carServicesStoreName, carServicesReducer),
         EffectsModule.forFeature([CarServicesEffects]),
+        MaterialModule,
     ],
     declarations: [CarServicesComponent],
 })

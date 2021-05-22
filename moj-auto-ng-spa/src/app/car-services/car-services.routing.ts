@@ -3,18 +3,18 @@ import { RouterModule, Route } from '@angular/router';
 import { CarServicesComponent } from './car-services.component';
 
 const routes: Route[] = [
-  {
-    path: '',
-    component: CarServicesComponent,
-  },
-  {
-    path: ':id',
-    component: CarServicesComponent,
-  },
+    {
+        path: '',
+        component: CarServicesComponent,
+    },
+    {
+        path: ':id/:carModel',
+        component: CarServicesComponent,
+    },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
 export class CarServicesRoutingModule {}
