@@ -1,0 +1,71 @@
+<div class="fuel-usage">
+    <h3 class="fuel-usage__header">
+        <div class="fuel-usage__header__title">
+            <span *ngIf="carModel != null">Potrošnja goriva za {{ carModel }} </span>
+            <span *ngIf="carModel == null">Potrošnja goriva za sve automobile </span>
+        </div>
+
+        <div class="registrations__header__actions">
+            <button mat-raised-button (click)="openCreateOrEditDialog(null)">Dodaj</button>
+        </div>
+    </h3>
+</div>
+
+<table class="fuel-usage__table" mat-table [dataSource]="fuelUsageData$ | async">
+    <ng-container [matColumnDef]="columnsToDisplay[0]">
+        <th mat-header-cell *matHeaderCellDef>Naziv pumpe</th>
+        <td mat-cell *matCellDef="let fuelUsage">
+            {{ fuelUsage.gasStationName }}
+        </td>
+    </ng-container>
+
+    <ng-container [matColumnDef]="columnsToDisplay[1]">
+        <th mat-header-cell *matHeaderCellDef>Količina (L)</th>
+        <td mat-cell *matCellDef="let fuelUsage">
+            {{ fuelUsage.litersFilled }}
+        </td>
+    </ng-container>
+
+    <ng-container [matColumnDef]="columnsToDisplay[2]">
+        <th mat-header-cell *matHeaderCellDef>Cena (rsd)</th>
+        <td mat-cell *matCellDef="let fuelUsage">
+            {{ fuelUsage.price }}
+        </td>
+    </ng-container>
+
+    <ng-container [matColumnDef]="columnsToDisplay[3]">
+        <th mat-header-cell *matHeaderCellDef>Datum</th>
+        <td mat-cell *matCellDef="let fuelUsage">
+            {{ fuelUsage.dateFilled | date }}
+        </td>
+    </ng-container>
+
+    <ng-container [matColumnDef]="columnsToDisplay[4]">
+        <th mat-header-cell *matHeaderCellDef>Automobil</th>
+        <td mat-cell *matCellDef="let fuelUsage">
+            {{ fuelUsage.car.model }}
+        </td>
+    </ng-container>
+
+    <ng-container [matColumnDef]="columnsToDisplay[5]">
+        <th mat-header-cell *matHeaderCellDef>Kilometraža</th>
+        <td mat-cell *matCellDef="let fuelUsage">
+            {{ fuelUsage.kilometrage }}
+        </td>
+    </ng-container>
+
+    <ng-container [matColumnDef]="columnsToDisplay[6]">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let fuelUsage">
+            <button mat-icon-button color="primary" title="Izmeni" (click)="openCreateOrEditDialog(fuelUsage)">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" title="Izbriši" (click)="deleteFuelUsageEntry(fuelUsage)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+</table>

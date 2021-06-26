@@ -11,7 +11,7 @@
 
     <table class="car-services__table" mat-table [dataSource]="carServicesData$ | async">
         <ng-container [matColumnDef]="columnsToDisplay[0]">
-            <th mat-header-cell *matHeaderCellDef>Ime servisa</th>
+            <th mat-header-cell *matHeaderCellDef>Naziv servisa</th>
             <td mat-cell *matCellDef="let service">
                 {{ service.title }}
             </td>

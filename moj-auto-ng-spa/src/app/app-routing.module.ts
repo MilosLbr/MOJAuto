@@ -20,7 +20,7 @@ const routes: Routes = [
     },
     {
         path: 'gorivo',
-        loadChildren: () => import('./fuel-consumption/fuel-consumption.module').then((m) => m.FuelConsumptionModule),
+        loadChildren: () => import('./fuel-consumption/fuel-usage.module').then((m) => m.FuelUsageModule),
         canActivate: [AuthGuard],
     },
     {

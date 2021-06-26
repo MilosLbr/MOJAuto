@@ -1,0 +1,25 @@
+.fuel-usage {
+    &__header {
+        margin-left: 30px;
+        margin-right: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &__title {
+            max-width: 80%;
+        }
+    }
+
+    &__table {
+        width: 100%;
+
+        th {
+            font-weight: bolder;
+        }
+
+        &--center {
+            text-align: center;
+        }
+    }
+}

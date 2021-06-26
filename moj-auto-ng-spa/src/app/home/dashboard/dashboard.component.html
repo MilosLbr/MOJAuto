@@ -17,7 +17,7 @@
             <div class="card-footer-actions">
                 <a mat-button color="primary" [routerLink]="['/registracije', car.id, car.model]">Registracije</a>
                 <a mat-button color="accent" [routerLink]="['/servisi', car.id, car.model]">Servisi</a>
-                <a mat-button color="warn" [routerLink]="['/gorivo', car.id]">Gorivo</a>
+                <a mat-button color="warn" [routerLink]="['/gorivo', car.id, car.model]">Gorivo</a>
             </div>
         </mat-card-actions>
     </mat-card>
