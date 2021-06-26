@@ -13,6 +13,7 @@ import {
     deleteCarServiceEntry,
     getCarServicesForCar,
     getCarServicesForUser,
+    updateCarServiceEntry,
 } from './store/car-services.actions';
 import { carServices } from './store/car-services.selectors';
 
@@ -70,7 +71,7 @@ export class CarServicesComponent implements OnInit {
             if (carService.id == null) {
                 this.store.dispatch(createNewCarServiceEntry({ carService }));
             } else {
-                console.log('implement update');
+                this.store.dispatch(updateCarServiceEntry({ carService }));
             }
         });
     }

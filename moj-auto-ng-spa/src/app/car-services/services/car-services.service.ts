@@ -28,6 +28,10 @@ export class CarServicesService {
         return this.http.post<ServiceDto>(this.baseUrl, service);
     }
 
+    updateCarServiceInfo(service: ServiceDto): Observable<ServiceDto> {
+        return this.http.put<ServiceDto>(this.baseUrl, service);
+    }
+
     deleteServiceInfo(serviceId: number): Observable<ServiceDto> {
         const url = this.baseUrl + '/' + serviceId;
 

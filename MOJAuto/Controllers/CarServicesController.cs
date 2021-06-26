@@ -75,6 +75,23 @@ namespace MOJAuto.Controllers
             }
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateCarServiceEntry(ServiceCreateEditDto serviceDto)
+        {
+            var dbService = await _carRepo.GetById<Services>(serviceDto.Id);
+
+            var updated = _mapper.Map(serviceDto, dbService);
+
+            if(await _carRepo.SaveAll() > 0)
+            {
+                var serviceToReturn = _mapper.Map<ServiceDto>(updated);
+
+                return Ok(serviceToReturn);
+            }
+
+            return BadRequest($"Desila se greška prilikom izmene servisa sa Id brojem ${serviceDto.Id}");
+        }
+
         [HttpDelete("{serviceId}")]
         public async Task<IActionResult> DeleteCarServiceEntry(int serviceId)
         {

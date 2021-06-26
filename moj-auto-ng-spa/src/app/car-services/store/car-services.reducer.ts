@@ -14,6 +14,7 @@ const srvcReducer = createReducer(
         actions.getCarServicesForUser,
         actions.getCarServicesForCar,
         actions.createNewCarServiceEntry,
+        actions.updateCarServiceEntry,
         actions.deleteCarServiceEntry,
         (state) => ({
             ...state,
@@ -24,6 +25,7 @@ const srvcReducer = createReducer(
         actions.getCarServicesForUserFail,
         actions.getCarServicesForCarFail,
         actions.createNewCarServiceEntryFail,
+        actions.updateCarServiceEntryFail,
         actions.deleteCarServiceEntryFail,
         (state) => ({ ...state, isLoading: false })
     ),
@@ -35,6 +37,9 @@ const srvcReducer = createReducer(
     ),
     on(actions.deleteCarServiceEntrySuccess, (state, action) =>
         adapter.removeOne(action.carService.id, { ...state, isLoading: false })
+    ),
+    on(actions.updateCarServiceEntrySuccess, (state, action) =>
+        adapter.updateOne({ id: action.carService.id, changes: action.carService }, state)
     )
 );
 

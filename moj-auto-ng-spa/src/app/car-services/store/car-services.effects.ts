@@ -59,6 +59,20 @@ export class CarServicesEffects {
         )
     );
 
+    updateServiceEntry$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(actions.updateCarServiceEntry),
+            exhaustMap(({ carService }) =>
+                this.carServicesService.updateCarServiceInfo(carService).pipe(
+                    map((carService) => actions.updateCarServiceEntrySuccess({ carService })),
+                    catchError((error: HttpErrorResponse) =>
+                        of(actions.updateCarServiceEntryFail({ error: extractErrorMessageFromResponse(error) }))
+                    )
+                )
+            )
+        )
+    );
+
     deleteServiceEntry$ = createEffect(() =>
         this.actions$.pipe(
             ofType(actions.deleteCarServiceEntry),
