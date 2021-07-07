@@ -8,15 +8,18 @@ import { FuelUsageRoutingModule } from './fuel-usage.routing';
 import { FuelUsageEffects } from './store/fuel-usage.effects';
 import { fuelUsageReducer } from './store/fuel-usage.reducer';
 import { fuelUsageStoreName } from './store/fuel-usage.store';
+import { CreateEditFuelUsageComponent } from './create-edit-fuel-usage/create-edit-fuel-usage.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
         FuelUsageRoutingModule,
         CommonModule,
         MaterialModule,
+        ReactiveFormsModule,
         StoreModule.forFeature(fuelUsageStoreName, fuelUsageReducer),
         EffectsModule.forFeature([FuelUsageEffects]),
     ],
-    declarations: [FuelUsageComponent],
+    declarations: [FuelUsageComponent, CreateEditFuelUsageComponent],
 })
 export class FuelUsageModule {}

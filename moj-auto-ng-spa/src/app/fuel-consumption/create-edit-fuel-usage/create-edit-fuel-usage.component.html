@@ -1,0 +1,49 @@
+<div class="create-edit-fuel-usage-dialog">
+    <div class="create-edit-fuel-usage-dialog__header">
+        <h3>
+            <span *ngIf="fuelUsageData != null"> Izmeni unos </span>
+            <span *ngIf="fuelUsageData == null"> Dodaj novi unos </span>
+        </h3>
+    </div>
+
+    <div class="create-edit-fuel-usage-dialog__form">
+        <mat-form-field appearance="fill">
+            <mat-label>Naziv pumpe</mat-label>
+            <input autocomplete="off" matInput [formControl]="gasStationNameControl" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Količina (L)</mat-label>
+            <input autocomplete="off" type="number" min="1" matInput [formControl]="litersFilledControl" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Cena</mat-label>
+            <input autocomplete="off" type="number" min="1" matInput [formControl]="priceControl" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Datum</mat-label>
+            <input autocomplete="off" matInput [formControl]="dateControl" [matDatepicker]="picker" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Automobil</mat-label>
+            <input matInput [formControl]="carFormControl" [matAutocomplete]="auto" />
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayCarName">
+                <mat-option *ngFor="let car of myCars" [value]="car">
+                    {{ car.model }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+
+    <div class="create-edit-fuel-usage-dialog__footer">
+        <button [disabled]="formData.invalid" mat-raised-button color="primary" (click)="onSaveChanges()"
+            >Sačuvaj</button
+        >
+        <button mat-raised-button (click)="onCancel()">Odustani</button>
+    </div>
+</div>

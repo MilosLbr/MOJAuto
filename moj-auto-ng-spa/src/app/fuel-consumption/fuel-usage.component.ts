@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { FuelUsage } from '../common/models/FuelUsage';
+import { UserCar } from '../common/models/UserCar';
+import { CarsService } from '../home/dashboard/services/cars.service';
+import { CreateEditFuelUsageComponent } from './create-edit-fuel-usage/create-edit-fuel-usage.component';
+import { CreateEditFuelUsageModel } from './create-edit-fuel-usage/create-edit-fuel-usage.model';
 import { FuelUsageService } from './services/fuel-usage.service';
-import { getAllFuelUsagesForUser } from './store/fuel-usage.actions';
+import { createNewFuelUsageEntry, getAllFuelUsagesForUser, updateFuelUsageEntry } from './store/fuel-usage.actions';
 import { getFuelUsages } from './store/fuel-usage.selectors';
 
 @Component({
@@ -17,8 +22,14 @@ export class FuelUsageComponent implements OnInit {
     carModel: string;
     fuelUsageData$: Observable<FuelUsage[]>;
     columnsToDisplay = ['gasStationName', 'liters', 'price', 'dateFiled', 'car', 'kilometrage', 'actions'];
+    myCars: UserCar[];
 
-    constructor(private route: ActivatedRoute, private store: Store, private fuelUsageService: FuelUsageService) {}
+    constructor(
+        private route: ActivatedRoute,
+        private store: Store,
+        private dialog: MatDialog,
+        private carsService: CarsService
+    ) {}
 
     ngOnInit(): void {
         this.carId = this.route.snapshot.params['id'];
@@ -29,9 +40,34 @@ export class FuelUsageComponent implements OnInit {
         }
 
         this.fuelUsageData$ = this.store.select(getFuelUsages);
+
+        this.myCars = this.carsService.getMyCarsFromStore(this.carId);
     }
 
-    openCreateOrEditDialog(fuelUsage: FuelUsage) {}
+    openCreateOrEditDialog(fuelUsage: FuelUsage) {
+        const dialogData: CreateEditFuelUsageModel = {
+            fuelUsage: fuelUsage,
+            myCars: this.myCars,
+        };
+
+        const dialogRef = this.dialog.open(CreateEditFuelUsageComponent, {
+            width: '50%',
+            data: dialogData,
+            disableClose: true,
+        });
+
+        dialogRef.afterClosed().subscribe((fuelUsage: FuelUsage) => {
+            if (fuelUsage == null) {
+                return;
+            }
+
+            if (fuelUsage.id == null) {
+                this.store.dispatch(createNewFuelUsageEntry({ fuelUsage }));
+            } else {
+                this.store.dispatch(updateFuelUsageEntry({ fuelUsage }));
+            }
+        });
+    }
 
     deleteFuelUsageEntry(fuelUsage: FuelUsage) {}
 }
