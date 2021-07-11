@@ -23,6 +23,11 @@
         </mat-form-field>
 
         <mat-form-field appearance="fill">
+            <mat-label>Kilometraža</mat-label>
+            <input autocomplete="off" type="number" min="1" matInput [formControl]="kilometrageControl" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
             <mat-label>Datum</mat-label>
             <input autocomplete="off" matInput [formControl]="dateControl" [matDatepicker]="picker" />
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

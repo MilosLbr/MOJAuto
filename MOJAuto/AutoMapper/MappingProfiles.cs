@@ -28,6 +28,7 @@ namespace MOJAuto.AutoMapper
 
             // fuel usage
             CreateMap<FuelUsage, FuelUsageDto>().ReverseMap();
+            CreateMap<FuelUsageCreateEditDto, FuelUsage>().ReverseMap();
 
             // car services
             CreateMap<Services, ServiceDto>().ReverseMap();

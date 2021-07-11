@@ -30,4 +30,72 @@ export class FuelUsageEffects {
             )
         )
     );
+
+    getFuelUsagesForCar$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(fuelUsagesActions.getFuelUsagesForCar),
+            exhaustMap((action) =>
+                this.fuelUsageService.getFuelUsagesForCar(action.carId).pipe(
+                    map((fuelUsages) => fuelUsagesActions.getFuelUsagesForCarSuccess({ fuelUsages })),
+                    catchError((error: HttpErrorResponse) =>
+                        of(fuelUsagesActions.getFuelUsagesForCarFail({ error: extractErrorMessageFromResponse(error) }))
+                    )
+                )
+            )
+        )
+    );
+
+    createFuelUsageEffect$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(fuelUsagesActions.createNewFuelUsageEntry),
+            exhaustMap((action) =>
+                this.fuelUsageService.createNewFuelUsageEntry(action.fuelUsage).pipe(
+                    map((fuelUsage) => fuelUsagesActions.createNewFuelUsageEntrySuccess({ fuelUsage })),
+                    catchError((error: HttpErrorResponse) =>
+                        of(
+                            fuelUsagesActions.createNewFuelUsageEntryFail({
+                                error: extractErrorMessageFromResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    udpateFuelUsageEffect$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(fuelUsagesActions.updateFuelUsageEntry),
+            exhaustMap((action) =>
+                this.fuelUsageService.updateFuelUsageEntry(action.fuelUsage).pipe(
+                    map((fuelUsage) => fuelUsagesActions.updateFuelUsageEntrySuccess({ fuelUsage })),
+                    catchError((error: HttpErrorResponse) =>
+                        of(
+                            fuelUsagesActions.updateFuelUsageEntryFail({
+                                error: extractErrorMessageFromResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
+
+    deleteFuelUsageEffect$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(fuelUsagesActions.deleteFuelUsageEntry),
+            exhaustMap((action) =>
+                this.fuelUsageService.deleteFuelUsageEntry(action.fuelUsage).pipe(
+                    map((fuelUsage) => fuelUsagesActions.deleteFuelUsageEntrySuccess({ fuelUsage })),
+                    catchError((error: HttpErrorResponse) =>
+                        of(
+                            fuelUsagesActions.deleteFuelUsageEntryFail({
+                                error: extractErrorMessageFromResponse(error),
+                            })
+                        )
+                    )
+                )
+            )
+        )
+    );
 }

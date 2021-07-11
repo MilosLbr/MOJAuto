@@ -14,6 +14,7 @@ export class CreateEditFuelUsageComponent implements OnInit {
     gasStationNameControl: FormControl;
     litersFilledControl: FormControl;
     priceControl: FormControl;
+    kilometrageControl: FormControl;
     dateControl: FormControl;
     carFormControl: FormControl;
     formData: FormGroup;
@@ -59,6 +60,7 @@ export class CreateEditFuelUsageComponent implements OnInit {
             Validators.min(1),
         ]);
         this.priceControl = this.fb.control(fuelUsageData?.price, [Validators.required, Validators.min(1)]);
+        this.kilometrageControl = this.fb.control(fuelUsageData?.kilometrage);
         this.dateControl = this.fb.control(fuelUsageData?.dateFilled, Validators.required);
         this.carFormControl = this.fb.control(fuelUsageData?.car, Validators.required);
 
@@ -66,6 +68,7 @@ export class CreateEditFuelUsageComponent implements OnInit {
             gasStationName: this.gasStationNameControl,
             litersFilled: this.litersFilledControl,
             price: this.priceControl,
+            kilometrage: this.kilometrageControl,
             dateFilled: this.dateControl,
             carId: this.carFormControl,
         });

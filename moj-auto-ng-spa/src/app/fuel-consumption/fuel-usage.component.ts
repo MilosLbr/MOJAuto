@@ -3,13 +3,20 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { YesNoDialogComponent } from '../common/components/yes-no-dialog/yes-no-dialog.component';
 import { FuelUsage } from '../common/models/FuelUsage';
 import { UserCar } from '../common/models/UserCar';
 import { CarsService } from '../home/dashboard/services/cars.service';
 import { CreateEditFuelUsageComponent } from './create-edit-fuel-usage/create-edit-fuel-usage.component';
 import { CreateEditFuelUsageModel } from './create-edit-fuel-usage/create-edit-fuel-usage.model';
 import { FuelUsageService } from './services/fuel-usage.service';
-import { createNewFuelUsageEntry, getAllFuelUsagesForUser, updateFuelUsageEntry } from './store/fuel-usage.actions';
+import {
+    createNewFuelUsageEntry,
+    deleteFuelUsageEntry,
+    getAllFuelUsagesForUser,
+    getFuelUsagesForCar,
+    updateFuelUsageEntry,
+} from './store/fuel-usage.actions';
 import { getFuelUsages } from './store/fuel-usage.selectors';
 
 @Component({
@@ -37,6 +44,8 @@ export class FuelUsageComponent implements OnInit {
 
         if (this.carId == null) {
             this.store.dispatch(getAllFuelUsagesForUser());
+        } else {
+            this.store.dispatch(getFuelUsagesForCar({ carId: this.carId }));
         }
 
         this.fuelUsageData$ = this.store.select(getFuelUsages);
@@ -69,5 +78,15 @@ export class FuelUsageComponent implements OnInit {
         });
     }
 
-    deleteFuelUsageEntry(fuelUsage: FuelUsage) {}
+    deleteFuelUsageEntry(fuelUsage: FuelUsage) {
+        const dialogRef = this.dialog.open(YesNoDialogComponent, {
+            data: 'Da li ste sigurni da želite da obrišete ovaj unos?',
+        });
+
+        dialogRef.afterClosed().subscribe((result: Boolean) => {
+            if (result) {
+                this.store.dispatch(deleteFuelUsageEntry({ fuelUsage }));
+            }
+        });
+    }
 }

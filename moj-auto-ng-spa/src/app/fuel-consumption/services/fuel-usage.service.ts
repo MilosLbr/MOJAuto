@@ -16,4 +16,22 @@ export class FuelUsageService {
         const url = this.baseUrl + '/getFuelUsagesForUser';
         return this.http.get<FuelUsage[]>(url);
     }
+
+    getFuelUsagesForCar(carId: number): Observable<FuelUsage[]> {
+        const url = this.baseUrl + `/getFuelUsagesForCar/${carId}`;
+        return this.http.get<FuelUsage[]>(url);
+    }
+
+    createNewFuelUsageEntry(fuelUsage: FuelUsage): Observable<FuelUsage> {
+        return this.http.post<FuelUsage>(this.baseUrl, fuelUsage);
+    }
+
+    updateFuelUsageEntry(fuelUsage: FuelUsage): Observable<FuelUsage> {
+        return this.http.put<FuelUsage>(this.baseUrl, fuelUsage);
+    }
+
+    deleteFuelUsageEntry(fuelUsage: FuelUsage): Observable<FuelUsage> {
+        const url = this.baseUrl + '/' + fuelUsage.id;
+        return this.http.delete<FuelUsage>(url);
+    }
 }
