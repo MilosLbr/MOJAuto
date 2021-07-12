@@ -1,4 +1,12 @@
-<div class="dashboard-container">
+<h3 class="dashboard__header">
+    <div class="dashboard__header__title">
+        <span>Moji automobili</span>
+    </div>
+    <div class="dashboard__header__actions">
+        <button mat-raised-button (click)="onCreateOrEditCarClicked(null)">Dodaj</button>
+    </div>
+</h3>
+<div class="dashboard__container">
     <mat-card class="card" *ngFor="let car of myCars$ | async">
         <mat-card-header>
             <mat-card-title>{{ car.model }}</mat-card-title>

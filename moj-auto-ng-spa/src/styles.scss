@@ -1,8 +1,36 @@
-@import "../node_modules/alertifyjs/build/css/alertify.min.css";
-@import "../node_modules/alertifyjs/build/css/themes/bootstrap.min.css";
+@import '../node_modules/alertifyjs/build/css/alertify.min.css';
+@import '../node_modules/alertifyjs/build/css/themes/bootstrap.min.css';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
 * {
     box-sizing: border-box;
+}
+
+.default-create-edit-dialog-styles {
+    &__header {
+        h3 {
+            border-bottom: 1px solid rgb(61, 58, 58);
+            font-weight: 500;
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__footer {
+        text-align: right;
+
+        button {
+            margin-right: 10px;
+        }
+    }
 }

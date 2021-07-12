@@ -7,7 +7,14 @@ import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import { HttpErrorDialogComponent } from 'src/app/common/components/http-error-dialog/http-error-dialog.component';
 import { extractErrorMessageFromResponse } from 'src/app/common/helpers/error-message-extractor';
 import { CarsService } from '../services/cars.service';
-import { fetchAllCars, fetchAllCarsFail, fetchAllCarsSuccess } from './cars.actions';
+import {
+    addNewCar,
+    addNewCarFail,
+    addNewCarSuccess,
+    fetchAllCars,
+    fetchAllCarsFail,
+    fetchAllCarsSuccess,
+} from './cars.actions';
 
 @Injectable({
     providedIn: 'root',
@@ -27,6 +34,20 @@ export class CarsEffects {
                                 error: extractErrorMessageFromResponse(error),
                             })
                         )
+                    )
+                )
+            )
+        )
+    );
+
+    addNewCarEffect$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(addNewCar),
+            exhaustMap(({ carData }) =>
+                this.carsService.addNewCar(carData).pipe(
+                    map((userCar) => addNewCarSuccess({ carData: userCar })),
+                    catchError((error: HttpErrorResponse) =>
+                        of(addNewCarFail({ error: extractErrorMessageFromResponse(error) }))
                     )
                 )
             )

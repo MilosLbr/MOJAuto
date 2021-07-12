@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DataModels.Models;
 using DTOs;
+using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -48,15 +49,21 @@ namespace MOJAuto.Controllers
         }
 
         [HttpPost("addCar")]
-        public async Task<IActionResult> AddCar(CarCreateDto carCreateDto)
+        public async Task<IActionResult> AddCar(CarCreateEditDto carCreateDto)
         {
+            if (!User.IsAuthenticated())
+            {
+                return Unauthorized();
+            }
+
             var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
             var carToCreate = _mapper.Map<Car>(carCreateDto);
 
             currentUser.MyCars.Add(carToCreate);
 
             if(await _carRepo.SaveAll() > 0){
-                return Ok("Novi auto je ubačen!");
+                var toReturn = _mapper.Map<CarInfoDto>(carToCreate);
+                return Ok(toReturn);
             }
             else
             {

@@ -1,0 +1,40 @@
+<div class="default-create-edit-dialog-styles">
+    <div class="default-create-edit-dialog-styles__header">
+        <h3 *ngIf="!carData">Dodaj novi automobil</h3>
+        <h3 *ngIf="!!carData">Izmeni</h3>
+    </div>
+
+    <div class="default-create-edit-dialog-styles__form">
+        <mat-form-field appearance="fill">
+            <mat-label>Naziv modela</mat-label>
+            <input autocomplete="off" matInput [formControl]="modelNameControl" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Kilometraža pri kupovini</mat-label>
+            <input autocomplete="off" matInput type="number" min="0" [formControl]="kilometrageControl" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Godina proizvodnje</mat-label>
+            <input autocomplete="off" matInput type="number" min="1900" [formControl]="manufactureYearControl" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Kubikaža motora</mat-label>
+            <input autocomplete="off" matInput type="number" min="1000" [formControl]="engineCubicCapacityControl" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Snaga motora (kW)</mat-label>
+            <input autocomplete="off" matInput type="number" min="1" [formControl]="enginePowerControl" />
+        </mat-form-field>
+    </div>
+
+    <div class="default-create-edit-dialog-styles__footer">
+        <button [disabled]="formData.invalid" mat-raised-button color="primary" (click)="onSaveChanges()"
+            >Sačuvaj</button
+        >
+        <button mat-raised-button (click)="onCancel()">Odustani</button>
+    </div>
+</div>

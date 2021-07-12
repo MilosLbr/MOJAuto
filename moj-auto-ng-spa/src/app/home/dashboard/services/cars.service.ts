@@ -5,17 +5,19 @@ import { environment } from 'src/environments/environment';
 import { Store } from '@ngrx/store';
 import { getAllCars } from '../../store/home.selectors';
 import { first } from 'rxjs/operators';
+import { CreateEditCarModel } from '../create-edit-car/create-edit-car.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
 })
 export class CarsService {
-    baseUrl = environment.apiUrl;
+    baseUrl = environment.apiUrl + '/cars';
 
     constructor(private http: HttpClient, private store: Store) {}
 
     getCarsForUser() {
-        const url = `${this.baseUrl}/cars/getCarsForUser`;
+        const url = `${this.baseUrl}/getCarsForUser`;
         return this.http.get<UserCar[]>(url);
     }
 
@@ -34,5 +36,10 @@ export class CarsService {
             });
 
         return myCars;
+    }
+
+    addNewCar(carData: CreateEditCarModel): Observable<UserCar> {
+        const url = this.baseUrl + '/addCar';
+        return this.http.post<UserCar>(url, carData);
     }
 }

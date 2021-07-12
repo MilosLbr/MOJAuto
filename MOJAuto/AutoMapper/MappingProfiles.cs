@@ -18,7 +18,7 @@ namespace MOJAuto.AutoMapper
             CreateMap<ApplicationUser, ApplicationUserBasicInfoDto>();
 
             // cars
-            CreateMap<CarCreateDto, Car>();
+            CreateMap<CarCreateEditDto, Car>();
             CreateMap<Car, CarInfoDto>();
             CreateMap<Car, CarBasicInfoDto>();
 

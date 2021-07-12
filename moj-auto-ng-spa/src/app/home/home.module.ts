@@ -15,6 +15,7 @@ import { homeStoreName } from './store/home.store';
 import { EffectsModule } from '@ngrx/effects';
 import { homeEffects } from './store/home.effects';
 import { MaterialModule } from '../common/modules/material.module';
+import { CreateEditCarComponent } from './dashboard/create-edit-car/create-edit-car.component';
 
 @NgModule({
     imports: [
@@ -28,7 +29,7 @@ import { MaterialModule } from '../common/modules/material.module';
         StoreModule.forFeature(homeStoreName, homeReducer),
         EffectsModule.forFeature(homeEffects),
     ],
-    declarations: [HomeComponent, LoginComponent, RegisterComponent, DashboardComponent],
+    declarations: [HomeComponent, LoginComponent, RegisterComponent, DashboardComponent, CreateEditCarComponent],
     exports: [HomeComponent],
 })
 export class HomeModule {}
