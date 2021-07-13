@@ -11,6 +11,12 @@ import {
     addNewCar,
     addNewCarFail,
     addNewCarSuccess,
+    deleteCar,
+    deleteCarFail,
+    deleteCarSuccess,
+    editCar,
+    editCarFail,
+    editCarSuccess,
     fetchAllCars,
     fetchAllCarsFail,
     fetchAllCarsSuccess,
@@ -54,10 +60,38 @@ export class CarsEffects {
         )
     );
 
+    editCarEffect$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(editCar),
+            exhaustMap(({ carData }) =>
+                this.carsService.editCar(carData).pipe(
+                    map((userCar) => editCarSuccess({ carData: userCar })),
+                    catchError((error: HttpErrorResponse) =>
+                        of(editCarFail({ error: extractErrorMessageFromResponse(error) }))
+                    )
+                )
+            )
+        )
+    );
+
+    deleteCarEffect$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(deleteCar),
+            exhaustMap(({ carId }) =>
+                this.carsService.deleteCar(carId).pipe(
+                    map((userCar) => deleteCarSuccess({ carData: userCar })),
+                    catchError((error: HttpErrorResponse) =>
+                        of(deleteCarFail({ error: extractErrorMessageFromResponse(error) }))
+                    )
+                )
+            )
+        )
+    );
+
     errorEffect$ = createEffect(
         () =>
             this.actions$.pipe(
-                ofType(fetchAllCarsFail),
+                ofType(fetchAllCarsFail, addNewCarFail, editCarFail, deleteCarFail),
                 tap((action) => {
                     this.dialogService.open(HttpErrorDialogComponent, {
                         data: action.error,

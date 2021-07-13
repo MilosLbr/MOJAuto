@@ -34,3 +34,20 @@ body {
         }
     }
 }
+
+.mat-card {
+    &-header-text {
+        width: 100%;
+        margin: 0 0 0 16px !important;
+    }
+
+    &-title {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    mat-menu {
+        display: none;
+    }
+}

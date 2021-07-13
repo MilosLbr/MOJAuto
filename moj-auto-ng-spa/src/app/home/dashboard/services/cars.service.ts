@@ -42,4 +42,14 @@ export class CarsService {
         const url = this.baseUrl + '/addCar';
         return this.http.post<UserCar>(url, carData);
     }
+
+    editCar(carData: CreateEditCarModel): Observable<UserCar> {
+        const url = this.baseUrl + '/editCar';
+        return this.http.put<UserCar>(url, carData);
+    }
+
+    deleteCar(carId: number): Observable<UserCar> {
+        const url = this.baseUrl + '/deleteCar/' + carId;
+        return this.http.delete<UserCar>(url);
+    }
 }

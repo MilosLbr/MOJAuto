@@ -70,5 +70,58 @@ namespace MOJAuto.Controllers
                 return BadRequest("Dogodila se greška prilikom upisivanja novog automobila!");
             }
         }
+        
+        [HttpPut("editCar")]
+        public async Task<IActionResult> EditCar(CarCreateEditDto carCreateEditDto)
+        {
+            if (!User.IsAuthenticated())
+            {
+                return Unauthorized();
+            }
+
+            var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);            
+            var carFromDb = currentUser.MyCars.FirstOrDefault(c => c.Id == carCreateEditDto.Id);
+            carCreateEditDto.ApplicationUserId = currentUser.Id;
+
+            if (carFromDb == null)
+            {
+                return BadRequest($"Nije pronađen automobil sa ID brojem {carCreateEditDto.Id}");
+            }
+
+            _mapper.Map<CarCreateEditDto, Car>(carCreateEditDto, carFromDb);
+
+            if(await _carRepo.SaveAll() >= 0)
+            {
+                var toReturn = _mapper.Map<CarInfoDto>(carFromDb);
+                return Ok(toReturn);
+            }
+            else
+            {
+                return BadRequest($"Desila se greška prilikom izmene automobila {carCreateEditDto.Id}");
+            }
+        }
+
+        [HttpDelete("deleteCar/{carId}")]
+        public async Task<IActionResult> DeleteCar(int carId)
+        {
+            var carFromDb = await _carRepo.GetById<Car>(carId);
+
+            if (carFromDb == null)
+            {
+                return BadRequest($"Nije pronađen automobil sa ID brojem {carId}");
+            }
+
+            _carRepo.Delete<Car>(carFromDb);
+
+            if(await _carRepo.SaveAll() > 0)
+            {
+                var toReturn = _mapper.Map<CarInfoDto>(carFromDb);
+                return Ok(toReturn);
+            }
+            else
+            {
+                return BadRequest($"Greška prilikom brisanja automobila sa ID brojem {carId}");
+            }
+        }
     }
 }
